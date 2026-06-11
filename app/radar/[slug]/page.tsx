@@ -41,7 +41,7 @@ export default async function NoticiaPage({ params }: Props) {
 
   return (
     <article>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <p className="text-xs uppercase tracking-widest text-muted">{n.category} · {fmt(n.date)}</p>
       <h1 className="font-display text-4xl mt-2 leading-tight">{n.title}</h1>
 

@@ -37,7 +37,7 @@ export default async function PaperPage({ params }: Props) {
 
   return (
     <article>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
       <p className="text-xs uppercase tracking-widest text-muted">Blink Research · {fmt(p.date)}</p>
       <h1 className="font-display text-4xl mt-2 leading-tight">{p.title}</h1>
       <p className="mt-2 text-muted">{p.authors.join(', ')}</p>

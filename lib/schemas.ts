@@ -9,7 +9,14 @@ export const noticiaSchema = z.object({
   date: z.coerce.date(),
   category: z.enum(CATEGORIES),
   summary: z.string().min(1), // "por que isso importa para sua PME"
-  sources: z.array(z.object({ label: z.string().min(1), url: z.string().url() })).min(1),
+  sources: z
+    .array(
+      z.object({
+        label: z.string().min(1),
+        url: z.string().url().regex(/^https?:\/\//, 'apenas http(s)'),
+      }),
+    )
+    .min(1),
   status: statusSchema,
 });
 

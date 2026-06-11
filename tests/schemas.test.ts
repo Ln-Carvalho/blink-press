@@ -30,6 +30,11 @@ describe('noticiaSchema', () => {
   it('expõe as 5 categorias do spec', () => {
     expect(CATEGORIES).toEqual(['Brasil', 'Mundo', 'Regulação', 'Tecnologia', 'Capital']);
   });
+  it('rejeita fonte com scheme não-http(s)', () => {
+    expect(() =>
+      noticiaSchema.parse({ ...noticiaOk, sources: [{ label: 'x', url: 'javascript:alert(1)' }] }),
+    ).toThrow();
+  });
 });
 
 describe('paperSchema', () => {
