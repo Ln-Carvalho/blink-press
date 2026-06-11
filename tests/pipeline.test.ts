@@ -39,4 +39,16 @@ describe('parsePipelineOutput', () => {
     const bad = output.replace('<filename>2026-06-12-selic-cai-credito-pme.mdx</filename>', '<filename>../../etc/passwd</filename>');
     expect(() => parsePipelineOutput(bad)).toThrow(/filename/);
   });
+  it('rejeita corpo com import/export (MDX executável)', () => {
+    const bad = output.replace('Corpo da análise.', 'import x from "y"\n\nCorpo.');
+    expect(() => parsePipelineOutput(bad)).toThrow(/executáveis/);
+  });
+  it('rejeita corpo com JSX/expressões', () => {
+    expect(() => parsePipelineOutput(output.replace('Corpo da análise.', 'Texto <Comp /> aqui.'))).toThrow(/executáveis/);
+    expect(() => parsePipelineOutput(output.replace('Corpo da análise.', 'Total: {process.env.X}'))).toThrow(/executáveis/);
+  });
+  it('aceita markdown comum (links, ênfase, headings)', () => {
+    const ok = output.replace('Corpo da análise.', '## Título\n\nVeja [o estudo](https://example.com) — **importante** para PMEs.');
+    expect(parsePipelineOutput(ok).mdx).toContain('[o estudo](https://example.com)');
+  });
 });

@@ -10,6 +10,14 @@ export function parsePipelineOutput(text: string): { filename: string; mdx: stri
   if (!FILENAME_RE.test(fname)) throw new Error(`filename inválido: ${fname}`);
 
   const { data, content } = matter(body);
+
+  // MDX compila import/export, JSX e expressões {} server-side. O corpo vindo da IA
+  // deve ser markdown puro — qualquer construção executável é rejeitada (fail-safe).
+  const EXECUTABLE_MDX = /^[ \t]*(import|export)\s|<[A-Za-z\/!]|\{[\s\S]*?\}/m;
+  if (EXECUTABLE_MDX.test(content)) {
+    throw new Error('Corpo MDX contém construções executáveis (import/export/JSX/expressões) — rejeitado');
+  }
+
   // força draft independentemente do que a IA escreveu (gate de curadoria humana)
   const validated = noticiaSchema.parse({ ...data, status: 'draft' });
 
