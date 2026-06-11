@@ -22,7 +22,7 @@ export function loadCollection<S extends z.ZodType>(
         // build falha aqui — segunda linha de defesa atrás do Keystatic
         throw new Error(`Frontmatter inválido em ${file}: ${parsed.error.message}`);
       }
-      return { ...parsed.data, slug: file.replace(/\.mdx$/, ''), content };
+      return { ...(parsed.data as object), slug: file.replace(/\.mdx$/, ''), content } as Entry<z.infer<S>>;
     });
 }
 

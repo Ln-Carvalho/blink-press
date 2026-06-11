@@ -1,0 +1,48 @@
+---
+title: Roteirização de entregas para PMEs com software 100% gratuito
+date: 2026-06-10
+authors:
+  - Blink Research
+abstract: PMEs que entregam produtos perdem margem todos os dias com rotas planejadas no improviso. Este artigo apresenta o problema científico por trás disso (CVRP — Capacitated Vehicle Routing Problem), mostra por que ele é difícil, e documenta uma solução funcional construída inteiramente com ferramentas gratuitas — VRPSolverEasy, OSRM e Nominatim — disponível para qualquer empresa usar agora.
+status: draft
+---
+
+## O problema: rotas no improviso custam margem
+
+Uma PME com três veículos e quarenta entregas por dia raramente planeja rotas com
+método — decide-se "no olho", pela experiência do motorista. O resultado típico é
+quilometragem 10–30% acima do necessário, janelas de entrega estouradas e veículos
+voltando meio vazios. Em operações com margem apertada, esse desperdício silencioso
+muitas vezes é a diferença entre lucro e prejuízo.
+
+## A ciência: CVRP e otimização combinatória
+
+Esse problema tem nome na literatura: **Capacitated Vehicle Routing Problem (CVRP)**
+— dado um conjunto de clientes com demandas, uma frota com capacidade limitada e um
+depósito, encontrar o conjunto de rotas de menor custo total. O CVRP é NP-difícil:
+o número de soluções possíveis explode combinatorialmente, e mesmo instâncias
+modestas são intratáveis por força bruta. É por isso que planejar "no olho" fica tão
+longe do ótimo — e por que solvers especializados, que combinam programação inteira
+e heurísticas, encontram rotas drasticamente melhores em segundos.
+
+## A solução: stack 100% gratuita
+
+Construímos um roteirizador funcional sem nenhuma licença paga:
+
+- **[VRPSolverEasy](https://github.com/inria-UFF/VRPSolverEasy)** — solver de CVRP
+  baseado em branch-cut-and-price, estado da arte acadêmico, com interface Python.
+- **[OSRM](https://project-osrm.org/)** — matriz de distâncias e tempos reais de
+  rua, usando dados do OpenStreetMap.
+- **[Nominatim](https://nominatim.org/)** — geocodificação de endereços (texto →
+  coordenadas), também sobre OpenStreetMap.
+
+O fluxo: a empresa sobe uma lista de endereços e demandas; o Nominatim geocodifica;
+o OSRM calcula a matriz de distâncias reais; o VRPSolverEasy resolve o CVRP e
+devolve as rotas por veículo, prontas para o dia.
+
+## Use agora
+
+A ferramenta está no ar, gratuita:
+**[roteirizador.streamlit.app](https://roteirizador.streamlit.app)**.
+Suba sua lista de entregas e compare o resultado com a rota que sua operação faria
+hoje — a diferença é o tamanho da margem que está na mesa.
