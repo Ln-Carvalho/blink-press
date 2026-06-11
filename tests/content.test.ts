@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import path from 'node:path';
-import { loadCollection, getNoticias, getNoticia } from '../lib/content';
+import { loadCollection, getNoticias, getNoticia, getPapers, getPaper } from '../lib/content';
 import { noticiaSchema } from '../lib/schemas';
 
 // import.meta.dirname requer Node 20.11+ (CI usa Node 22)
@@ -38,5 +38,16 @@ describe('getNoticias (contra fixtures via baseDir)', () => {
     expect(
       getNoticia('2026-06-05-noticia-draft', { baseDir: FIXTURES, includeDrafts: true })?.title,
     ).toBe('Notícia rascunho');
+  });
+});
+
+describe('getPapers (contra fixtures via baseDir)', () => {
+  it('filtra drafts por padrão e ordena por data desc', () => {
+    const pub = getPapers({ baseDir: FIXTURES });
+    expect(pub.map((p) => p.slug)).toEqual(['paper-publicado']);
+  });
+  it('getPaper respeita includeDrafts', () => {
+    expect(getPaper('paper-draft', { baseDir: FIXTURES })).toBeUndefined();
+    expect(getPaper('paper-draft', { baseDir: FIXTURES, includeDrafts: true })?.title).toBe('Paper rascunho');
   });
 });
