@@ -7,9 +7,9 @@ const isProd =
 
 export default config({
   storage: isProd
-    ? { kind: 'github', repo: { owner: 'eidryan', name: 'blink-hub' } }
+    ? { kind: 'github', repo: { owner: 'Ln-Carvalho', name: 'blink-press' } }
     : { kind: 'local' },
-  ui: { brand: { name: 'Blink Hub' } },
+  ui: { brand: { name: 'Blink Press' } },
   collections: {
     noticias: collection({
       label: 'Notícias (Radar)',

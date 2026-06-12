@@ -1,4 +1,4 @@
-# blink-hub
+# blink-press
 
 Hub de conteúdo orgânico da Blink — **Radar** (notícias para PMEs, `/radar`) e **Research** (papers, `/research`) — servido sob `blinkgroup.com.br` via rewrites do site institucional.
 
