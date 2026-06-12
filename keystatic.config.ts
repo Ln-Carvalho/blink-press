@@ -1,9 +1,7 @@
 import { config, collection, fields } from '@keystatic/core';
 import { CATEGORIES } from './lib/schemas';
 
-const isProd =
-  process.env.NODE_ENV === 'production' &&
-  Boolean(process.env.KEYSTATIC_GITHUB_CLIENT_ID);
+const isProd = process.env.NODE_ENV === 'production';
 
 export default config({
   storage: isProd
