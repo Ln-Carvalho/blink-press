@@ -19,17 +19,17 @@ export default function NewsletterForm() {
   if (state === 'ok') return <p className="text-sm">Pronto — você vai receber o radar da semana. 📬</p>;
 
   return (
-    <form onSubmit={submit} className="flex gap-2">
+    <form onSubmit={submit} className="flex flex-col gap-2 sm:flex-row">
       <input
         type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
         placeholder="seu@email.com.br"
-        className="flex-1 border border-line bg-white px-3 py-2 text-sm rounded-none focus:outline-none focus:border-ink"
+        className="flex-1 min-h-[44px] rounded-full border border-line bg-white px-4 text-sm focus:outline-none focus:border-orange focus:ring-1 focus:ring-orange"
       />
       <button type="submit" disabled={state === 'loading'}
-        className="bg-ink text-paper px-4 py-2 text-sm disabled:opacity-50">
+        className="brand-gradient min-h-[44px] rounded-full px-6 text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-50">
         {state === 'loading' ? 'Enviando…' : 'Assinar'}
       </button>
-      {state === 'error' && <p className="text-sm text-red-700 self-center">Falhou — tente de novo.</p>}
+      {state === 'error' && <p className="text-sm text-red self-center">Falhou — tente de novo.</p>}
     </form>
   );
 }

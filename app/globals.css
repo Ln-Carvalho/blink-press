@@ -1,16 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #0a0a0a;
-  --color-paper: #fafaf7;
+  --color-paper: #FDFAF4;
+  --color-ink: #212121;
   --color-muted: #6b6b6b;
   --color-line: #e3e3de;
-  --font-display: var(--font-newsreader), Georgia, serif;
-  --font-body: var(--font-libre), system-ui, sans-serif;
+  --color-orange: #FF6A00;
+  --color-gold: #FFA52E;
+  --color-red: #F21A1A;
+
+  --font-display: var(--font-museo), system-ui, sans-serif;
+  --font-body: var(--font-jakarta), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
 body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Brand gradient — used only as an accent (buttons, rules, active chips). */
+.brand-gradient {
+  background-image: linear-gradient(135deg, var(--color-gold), var(--color-orange) 55%, var(--color-red));
+}
+.brand-gradient-text {
+  background-image: linear-gradient(135deg, var(--color-gold), var(--color-orange) 55%, var(--color-red));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

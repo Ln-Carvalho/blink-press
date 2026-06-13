@@ -42,24 +42,28 @@ export default async function NoticiaPage({ params }: Props) {
   return (
     <article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
-      <p className="text-xs uppercase tracking-widest text-muted">{n.category} · {fmt(n.date)}</p>
-      <h1 className="font-display text-4xl mt-2 leading-tight">{n.title}</h1>
 
-      <div className="mt-6 border-l-2 border-ink pl-4">
-        <p className="text-sm uppercase tracking-widest text-muted">Por que isso importa para sua PME</p>
-        <p className="mt-1 text-lg leading-relaxed">{n.summary}</p>
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{n.category} · {fmt(n.date)}</p>
+      <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{n.title}</h1>
+
+      <div className="mt-8 rounded-r-xl border-l-4 border-orange bg-white py-4 pl-5 pr-4">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Por que isso importa para sua PME</p>
+        <p className="mt-2 text-lg leading-relaxed">{n.summary}</p>
       </div>
 
       <Prose>
         <MDXRemote source={n.content} />
       </Prose>
 
-      <footer className="mt-12 border-t border-line pt-6">
-        <p className="text-sm uppercase tracking-widest text-muted">Fontes</p>
-        <ul className="mt-2 space-y-1 text-sm">
+      <footer className="mt-14 border-t border-line pt-6">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Fontes</p>
+        <ul className="mt-3 space-y-2 text-sm">
           {n.sources.map((s) => (
             <li key={s.url}>
-              <a href={s.url} rel="noopener noreferrer" target="_blank" className="underline underline-offset-2">{s.label}</a>
+              <a href={s.url} rel="noopener noreferrer" target="_blank"
+                className="text-orange underline underline-offset-2 decoration-orange/40 hover:decoration-orange">
+                {s.label}
+              </a>
             </li>
           ))}
         </ul>
