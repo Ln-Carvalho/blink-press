@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
-import { Newsreader, Libre_Franklin } from 'next/font/google';
+import { MuseoModerno, Plus_Jakarta_Sans, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 
-const newsreader = Newsreader({ subsets: ['latin'], variable: '--font-newsreader', style: ['normal', 'italic'] });
-const libre = Libre_Franklin({ subsets: ['latin'], variable: '--font-libre' });
+const display = MuseoModerno({ subsets: ['latin'], weight: ['500', '600', '700'], variable: '--font-museo' });
+const body = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta' });
+const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-plex-mono' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blinkgroup.com.br'),
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${newsreader.variable} ${libre.variable}`}>
+    <html lang="pt-BR" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body className="min-h-screen flex flex-col">{children}</body>
     </html>
   );
