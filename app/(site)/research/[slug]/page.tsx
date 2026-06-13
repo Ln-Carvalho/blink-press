@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getPaper, getPapers } from '@/lib/content';
 import Prose from '@/components/Prose';
+import PdfDownloadButton from '@/components/PdfDownloadButton';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -38,15 +39,18 @@ export default async function PaperPage({ params }: Props) {
   return (
     <article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
-      <p className="text-xs uppercase tracking-widest text-muted">Blink Research · {fmt(p.date)}</p>
-      <h1 className="font-display text-4xl mt-2 leading-tight">{p.title}</h1>
-      <p className="mt-2 text-muted">{p.authors.join(', ')}</p>
 
-      <div className="mt-6 border border-line p-5 bg-white">
-        <p className="text-xs uppercase tracking-widest text-muted">Abstract</p>
-        <p className="mt-2 leading-relaxed">{p.abstract}</p>
+      <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Research · {fmt(p.date)}</p>
+      <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{p.title}</h1>
+      <p className="mt-3 text-muted">{p.authors.join(', ')}</p>
+
+      <div className="mt-8 rounded-2xl border border-line bg-white p-6 sm:p-8">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Abstract</p>
+        <p className="mt-3 leading-relaxed">{p.abstract}</p>
         {p.pdf && (
-          <a href={p.pdf} className="mt-3 inline-block text-sm underline underline-offset-2">Baixar PDF →</a>
+          <div className="mt-6">
+            <PdfDownloadButton href={p.pdf} variant="primary" />
+          </div>
         )}
       </div>
 
