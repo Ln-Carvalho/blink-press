@@ -10,45 +10,84 @@ export const metadata: Metadata = {
 
 const fmt = (d: Date) => d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
 
+function Chip({ children, active = false }: { children: React.ReactNode; active?: boolean }) {
+  return (
+    <span
+      className={
+        active
+          ? 'brand-gradient text-white inline-block rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide'
+          : 'inline-block rounded-full border border-line px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted'
+      }
+    >
+      {children}
+    </span>
+  );
+}
+
 export default function RadarPage() {
   const noticias = getNoticias();
   const [destaque, ...resto] = noticias;
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-14">
+      <header>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Radar</p>
+        <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">
+          Notícias que importam para sua PME
+        </h1>
+      </header>
+
       {destaque && (
-        <article className="border-b border-line pb-10">
-          <p className="text-xs uppercase tracking-widest text-muted">{destaque.category} · {fmt(destaque.date)}</p>
-          <h1 className="font-display text-4xl mt-2 leading-tight">
-            <Link href={`/radar/${destaque.slug}`}>{destaque.title}</Link>
-          </h1>
-          <p className="mt-4 text-lg leading-relaxed"><em className="font-display">Por que importa:</em> {destaque.summary}</p>
+        <article className="border-b border-line pb-12">
+          <div className="flex items-center gap-3">
+            <Chip active>{destaque.category}</Chip>
+            <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
+          </div>
+          <h2 className="mt-4 font-display font-semibold leading-tight text-[clamp(1.75rem,5vw,2.5rem)]">
+            <Link href={`/radar/${destaque.slug}`} className="transition-colors hover:text-orange">
+              {destaque.title}
+            </Link>
+          </h2>
+          <p className="mt-4 text-lg leading-relaxed text-ink">
+            <span className="font-semibold brand-gradient-text">Por que importa:</span> {destaque.summary}
+          </p>
         </article>
       )}
 
-      <section className="space-y-8">
+      <section className="space-y-10">
         {resto.map((n) => (
-          <article key={n.slug}>
-            <p className="text-xs uppercase tracking-widest text-muted">{n.category} · {fmt(n.date)}</p>
-            <h2 className="font-display text-2xl mt-1">
-              <Link href={`/radar/${n.slug}`}>{n.title}</Link>
-            </h2>
-            <p className="mt-2 text-muted">{n.summary}</p>
+          <article key={n.slug} className="group">
+            <Link href={`/radar/${n.slug}`} className="block">
+              <div className="flex items-center gap-3">
+                <Chip>{n.category}</Chip>
+                <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(n.date)}</span>
+              </div>
+              <h2 className="mt-3 font-display text-2xl font-semibold leading-snug transition-colors group-hover:text-orange">
+                {n.title}
+              </h2>
+              <p className="mt-2 text-muted">{n.summary}</p>
+            </Link>
           </article>
         ))}
       </section>
 
-      <aside className="border border-line p-6">
-        <h2 className="font-display text-xl">Blink Research</h2>
+      <aside className="rounded-2xl border border-line bg-white p-6 sm:p-8">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Programa</p>
+        <h2 className="mt-2 font-display text-xl font-semibold">Blink Research</h2>
         <p className="mt-2 text-sm text-muted">
           Nosso programa de pesquisa aplicada para PMEs — estudos com rigor acadêmico e aplicação imediata.
         </p>
-        <Link href="/research" className="mt-3 inline-block text-sm underline underline-offset-2">Conhecer o programa →</Link>
+        <Link
+          href="/research"
+          className="mt-4 inline-flex min-h-[44px] items-center font-semibold text-orange transition-colors hover:text-red"
+        >
+          Conhecer o programa →
+        </Link>
       </aside>
 
-      <aside className="border-t border-line pt-8">
-        <h2 className="font-display text-xl">Receba o radar da semana</h2>
-        <p className="mt-1 mb-4 text-sm text-muted">O essencial para sua PME, por e-mail. Sem spam.</p>
+      <aside className="border-t border-line pt-10">
+        <h2 className="font-display text-xl font-semibold">Receba o radar da semana</h2>
+        <p className="mb-4 mt-1 text-sm text-muted">O essencial para sua PME, por e-mail. Sem spam.</p>
         <NewsletterForm />
       </aside>
     </div>
