@@ -1,12 +1,18 @@
 ---
 title: Roteirização de entregas para PMEs com software 100% gratuito
+status: draft
 date: 2026-06-10
 authors:
   - Blink Research
-abstract: PMEs que entregam produtos perdem margem todos os dias com rotas planejadas no improviso. Este artigo apresenta o problema científico por trás disso (CVRP — Capacitated Vehicle Routing Problem), mostra por que ele é difícil, e documenta uma solução funcional construída inteiramente com ferramentas gratuitas — VRPSolverEasy, OSRM e Nominatim — disponível para qualquer empresa usar agora.
-status: draft
+  - Luan Pontes de Carvalho
+abstract: >-
+  PMEs que entregam produtos perdem margem todos os dias com rotas planejadas no
+  improviso. Este artigo apresenta o problema científico por trás disso (CVRP —
+  Capacitated Vehicle Routing Problem), mostra por que ele é difícil, e
+  documenta uma solução funcional construída inteiramente com ferramentas
+  gratuitas — VRPSolverEasy, OSRM e Nominatim — disponível para qualquer empresa
+  usar agora.
 ---
-
 ## O problema: rotas no improviso custam margem
 
 Uma PME com três veículos e quarenta entregas por dia raramente planeja rotas com
@@ -29,11 +35,11 @@ e heurísticas, encontram rotas drasticamente melhores em segundos.
 
 Construímos um roteirizador funcional sem nenhuma licença paga:
 
-- **[VRPSolverEasy](https://github.com/inria-UFF/VRPSolverEasy)** — solver de CVRP
+* [**VRPSolverEasy**](https://github.com/inria-UFF/VRPSolverEasy) — solver de CVRP
   baseado em branch-cut-and-price, estado da arte acadêmico, com interface Python.
-- **[OSRM](https://project-osrm.org/)** — matriz de distâncias e tempos reais de
+* [**OSRM**](https://project-osrm.org/) — matriz de distâncias e tempos reais de
   rua, usando dados do OpenStreetMap.
-- **[Nominatim](https://nominatim.org/)** — geocodificação de endereços (texto →
+* [**Nominatim**](https://nominatim.org/) — geocodificação de endereços (texto →
   coordenadas), também sobre OpenStreetMap.
 
 O fluxo: a empresa sobe uma lista de endereços e demandas; o Nominatim geocodifica;
@@ -43,6 +49,6 @@ devolve as rotas por veículo, prontas para o dia.
 ## Use agora
 
 A ferramenta está no ar, gratuita:
-**[roteirizador.streamlit.app](https://roteirizador.streamlit.app)**.
+[**roteirizador.streamlit.app**](https://roteirizador.streamlit.app).
 Suba sua lista de entregas e compare o resultado com a rota que sua operação faria
 hoje — a diferença é o tamanho da margem que está na mesa.
