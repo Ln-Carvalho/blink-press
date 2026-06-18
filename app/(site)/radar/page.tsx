@@ -85,6 +85,20 @@ export default function RadarPage() {
         </Link>
       </aside>
 
+      <aside className="rounded-2xl border border-line bg-white p-6 sm:p-8">
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Editorial</p>
+        <h2 className="mt-2 font-display text-xl font-semibold">Blink Perspectivas</h2>
+        <p className="mt-2 text-sm text-muted">
+          Análises sobre o que muda no cenário e o que isso representa para a operação do seu negócio.
+        </p>
+        <Link
+          href="/radar/perspectivas"
+          className="mt-4 inline-flex min-h-[44px] items-center font-semibold text-orange transition-colors hover:text-red"
+        >
+          Ler as perspectivas →
+        </Link>
+      </aside>
+
       <aside className="border-t border-line pt-10">
         <h2 className="font-display text-xl font-semibold">Receba o radar da semana</h2>
         <p className="mb-4 mt-1 text-sm text-muted">O essencial para sua PME, por e-mail. Sem spam.</p>
