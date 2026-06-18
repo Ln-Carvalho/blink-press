@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import path from 'node:path';
-import { loadCollection, getNoticias, getNoticia, getPapers, getPaper } from '../lib/content';
-import { noticiaSchema } from '../lib/schemas';
+import { loadCollection, getNoticias, getNoticia, getPapers, getPaper, getPerspectivas, getPerspectiva } from '../lib/content';
+import { noticiaSchema, perspectivaSchema } from '../lib/schemas';
 
 // import.meta.dirname requer Node 20.11+ (CI usa Node 22)
 const FIXTURES = path.join(import.meta.dirname, 'fixtures');
@@ -49,5 +49,26 @@ describe('getPapers (contra fixtures via baseDir)', () => {
   it('getPaper respeita includeDrafts', () => {
     expect(getPaper('paper-draft', { baseDir: FIXTURES })).toBeUndefined();
     expect(getPaper('paper-draft', { baseDir: FIXTURES, includeDrafts: true })?.title).toBe('Paper rascunho');
+  });
+});
+
+describe('getPerspectivas (contra fixtures via baseDir)', () => {
+  it('filtra drafts por padrão e ordena por data desc', () => {
+    const pub = getPerspectivas({ baseDir: FIXTURES });
+    expect(pub.map((p) => p.slug)).toEqual(['perspectiva-publicada']);
+  });
+  it('inclui drafts quando pedido', () => {
+    const all = getPerspectivas({ baseDir: FIXTURES, includeDrafts: true });
+    expect(all[0].slug).toBe('perspectiva-draft'); // mais recente primeiro
+    expect(all).toHaveLength(2);
+  });
+  it('getPerspectiva acha por slug e respeita includeDrafts', () => {
+    expect(getPerspectiva('perspectiva-draft', { baseDir: FIXTURES })).toBeUndefined();
+    expect(
+      getPerspectiva('perspectiva-draft', { baseDir: FIXTURES, includeDrafts: true })?.title,
+    ).toBe('Perspectiva rascunho');
+  });
+  it('loadCollection lança erro em frontmatter inválido de perspectiva', () => {
+    expect(() => loadCollection(path.join(INVALID, 'perspectivas'), perspectivaSchema)).toThrow(/quebrada/);
   });
 });

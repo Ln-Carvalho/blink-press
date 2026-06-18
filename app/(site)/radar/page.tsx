@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getNoticias } from '@/lib/content';
 import NewsletterForm from '@/components/NewsletterForm';
+import AnimateOnView from '@/components/AnimateOnView';
 
 export const metadata: Metadata = {
   title: 'Radar — notícias que importam para sua PME',
@@ -30,66 +31,92 @@ export default function RadarPage() {
 
   return (
     <div className="space-y-14">
-      <header>
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Radar</p>
-        <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">
-          Notícias que importam para sua PME
-        </h1>
-      </header>
+      <AnimateOnView>
+        <header>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Radar</p>
+          <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">
+            Notícias que importam para sua PME
+          </h1>
+        </header>
+      </AnimateOnView>
 
       {destaque && (
-        <article className="border-b border-line pb-12">
-          <div className="flex items-center gap-3">
-            <Chip active>{destaque.category}</Chip>
-            <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
-          </div>
-          <h2 className="mt-4 font-display font-semibold leading-tight text-[clamp(1.75rem,5vw,2.5rem)]">
-            <Link href={`/radar/${destaque.slug}`} className="transition-colors hover:text-orange">
-              {destaque.title}
-            </Link>
-          </h2>
-          <p className="mt-4 text-lg leading-relaxed text-ink">
-            <span className="font-semibold brand-gradient-text">Por que importa:</span> {destaque.summary}
-          </p>
-        </article>
+        <AnimateOnView delay={80}>
+          <article className="border-b border-line pb-12">
+            <div className="flex items-center gap-3">
+              <Chip active>{destaque.category}</Chip>
+              <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
+            </div>
+            <h2 className="mt-4 font-display font-semibold leading-tight text-[clamp(1.75rem,5vw,2.5rem)]">
+              <Link href={`/radar/${destaque.slug}`} className="transition-colors hover:text-orange">
+                {destaque.title}
+              </Link>
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-ink">
+              <span className="font-semibold brand-gradient-text">Por que importa:</span> {destaque.summary}
+            </p>
+          </article>
+        </AnimateOnView>
       )}
 
       <section className="space-y-10">
-        {resto.map((n) => (
-          <article key={n.slug} className="group">
-            <Link href={`/radar/${n.slug}`} className="block">
-              <div className="flex items-center gap-3">
-                <Chip>{n.category}</Chip>
-                <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(n.date)}</span>
-              </div>
-              <h2 className="mt-3 font-display text-2xl font-semibold leading-snug transition-colors group-hover:text-orange">
-                {n.title}
-              </h2>
-              <p className="mt-2 text-muted">{n.summary}</p>
-            </Link>
-          </article>
+        {resto.map((n, i) => (
+          <AnimateOnView key={n.slug} delay={Math.min(i, 4) * 80}>
+            <article className="group">
+              <Link href={`/radar/${n.slug}`} className="block">
+                <div className="flex items-center gap-3">
+                  <Chip>{n.category}</Chip>
+                  <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(n.date)}</span>
+                </div>
+                <h2 className="mt-3 font-display text-2xl font-semibold leading-snug transition-colors group-hover:text-orange">
+                  {n.title}
+                </h2>
+                <p className="mt-2 text-muted">{n.summary}</p>
+              </Link>
+            </article>
+          </AnimateOnView>
         ))}
       </section>
 
-      <aside className="rounded-2xl border border-line bg-white p-6 sm:p-8">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Programa</p>
-        <h2 className="mt-2 font-display text-xl font-semibold">Blink Research</h2>
-        <p className="mt-2 text-sm text-muted">
-          Nosso programa de pesquisa aplicada para PMEs — estudos com rigor acadêmico e aplicação imediata.
-        </p>
-        <Link
-          href="/research"
-          className="mt-4 inline-flex min-h-[44px] items-center font-semibold text-orange transition-colors hover:text-red"
-        >
-          Conhecer o programa →
-        </Link>
-      </aside>
+      <AnimateOnView>
+        <aside className="rounded-2xl border border-line bg-white p-6 sm:p-8">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Programa</p>
+          <h2 className="mt-2 font-display text-xl font-semibold">Blink Research</h2>
+          <p className="mt-2 text-sm text-muted">
+            Nosso programa de pesquisa aplicada para PMEs — estudos com rigor acadêmico e aplicação imediata.
+          </p>
+          <Link
+            href="/research"
+            className="mt-4 inline-flex min-h-[44px] items-center font-semibold text-orange transition-colors hover:text-red"
+          >
+            Conhecer o programa →
+          </Link>
+        </aside>
+      </AnimateOnView>
 
-      <aside className="border-t border-line pt-10">
-        <h2 className="font-display text-xl font-semibold">Receba o radar da semana</h2>
-        <p className="mb-4 mt-1 text-sm text-muted">O essencial para sua PME, por e-mail. Sem spam.</p>
-        <NewsletterForm />
-      </aside>
+      <AnimateOnView>
+        <aside className="rounded-2xl border border-line bg-white p-6 sm:p-8">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Editorial</p>
+          <h2 className="mt-2 font-display text-xl font-semibold">Blink Perspectivas</h2>
+          <p className="mt-2 text-sm text-muted">
+            Análises sobre o que muda no cenário e o que isso representa para a operação do seu negócio.
+          </p>
+          <Link
+            href="/radar/perspectivas"
+            className="mt-4 inline-flex min-h-[44px] items-center font-semibold text-orange transition-colors hover:text-red"
+          >
+            Ler as perspectivas →
+          </Link>
+        </aside>
+      </AnimateOnView>
+
+      <AnimateOnView>
+        <aside className="border-t border-line pt-10">
+          <h2 className="font-display text-xl font-semibold">Receba o radar da semana</h2>
+          <p className="mb-4 mt-1 text-sm text-muted">O essencial para sua PME, por e-mail. Sem spam.</p>
+          <NewsletterForm />
+        </aside>
+      </AnimateOnView>
     </div>
   );
 }

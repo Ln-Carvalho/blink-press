@@ -3,6 +3,9 @@ import type { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getNoticia, getNoticias } from '@/lib/content';
 import Prose from '@/components/Prose';
+import AnimateOnView from '@/components/AnimateOnView';
+import ProseAnimated from '@/components/ProseAnimated';
+import ExternalLink from '@/components/ExternalLink';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -43,31 +46,39 @@ export default async function NoticiaPage({ params }: Props) {
     <article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
 
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{n.category} · {fmt(n.date)}</p>
-      <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{n.title}</h1>
+      <AnimateOnView>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{n.category} · {fmt(n.date)}</p>
+        <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{n.title}</h1>
+      </AnimateOnView>
 
-      <div className="mt-8 rounded-r-xl border-l-4 border-orange bg-white py-4 pl-5 pr-4">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Por que isso importa para sua PME</p>
-        <p className="mt-2 text-lg leading-relaxed">{n.summary}</p>
-      </div>
+      <AnimateOnView delay={80}>
+        <div className="mt-8 rounded-r-xl border-l-4 border-orange bg-white py-4 pl-5 pr-4">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Por que isso importa para sua PME</p>
+          <p className="mt-2 text-lg leading-relaxed">{n.summary}</p>
+        </div>
+      </AnimateOnView>
 
-      <Prose>
-        <MDXRemote source={n.content} />
-      </Prose>
+      <ProseAnimated>
+        <Prose>
+          <MDXRemote source={n.content} components={{ a: ExternalLink }} />
+        </Prose>
+      </ProseAnimated>
 
-      <footer className="mt-14 border-t border-line pt-6">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Fontes</p>
-        <ul className="mt-3 space-y-2 text-sm">
-          {n.sources.map((s) => (
-            <li key={s.url}>
-              <a href={s.url} rel="noopener noreferrer" target="_blank"
-                className="text-orange underline underline-offset-2 decoration-orange/40 hover:decoration-orange">
-                {s.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </footer>
+      <AnimateOnView>
+        <footer className="mt-14 border-t border-line pt-6">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Fontes</p>
+          <ul className="mt-3 space-y-2 text-sm">
+            {n.sources.map((s) => (
+              <li key={s.url}>
+                <a href={s.url} rel="noopener noreferrer" target="_blank"
+                  className="text-orange underline underline-offset-2 decoration-orange/40 hover:decoration-orange">
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </footer>
+      </AnimateOnView>
     </article>
   );
 }
