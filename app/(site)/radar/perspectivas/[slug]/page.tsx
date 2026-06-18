@@ -4,6 +4,9 @@ import type { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getPerspectiva, getPerspectivas } from '@/lib/content';
 import Prose from '@/components/Prose';
+import AnimateOnView from '@/components/AnimateOnView';
+import ProseAnimated from '@/components/ProseAnimated';
+import ExternalLink from '@/components/ExternalLink';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -46,23 +49,31 @@ export default async function PerspectivaPage({ params }: Props) {
     <article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
 
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{p.category} · {fmt(p.date)}</p>
-      <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{p.title}</h1>
+      <AnimateOnView>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{p.category} · {fmt(p.date)}</p>
+        <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{p.title}</h1>
+      </AnimateOnView>
 
-      <div className="mt-8 rounded-r-xl border-l-4 border-orange bg-white py-4 pl-5 pr-4">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Em resumo</p>
-        <p className="mt-2 text-lg leading-relaxed">{p.summary}</p>
-      </div>
+      <AnimateOnView delay={80}>
+        <div className="mt-8 rounded-r-xl border-l-4 border-orange bg-white py-4 pl-5 pr-4">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Em resumo</p>
+          <p className="mt-2 text-lg leading-relaxed">{p.summary}</p>
+        </div>
+      </AnimateOnView>
 
-      <Prose>
-        <MDXRemote source={p.content} />
-      </Prose>
+      <ProseAnimated>
+        <Prose>
+          <MDXRemote source={p.content} components={{ a: ExternalLink }} />
+        </Prose>
+      </ProseAnimated>
 
-      <footer className="mt-14 border-t border-line pt-6">
-        <Link href="/radar/perspectivas" className="font-mono text-xs uppercase tracking-[0.2em] text-orange hover:text-red transition-colors">
-          ← Todas as perspectivas
-        </Link>
-      </footer>
+      <AnimateOnView>
+        <footer className="mt-14 border-t border-line pt-6">
+          <Link href="/radar/perspectivas" className="font-mono text-xs uppercase tracking-[0.2em] text-orange hover:text-red transition-colors">
+            ← Todas as perspectivas
+          </Link>
+        </footer>
+      </AnimateOnView>
     </article>
   );
 }

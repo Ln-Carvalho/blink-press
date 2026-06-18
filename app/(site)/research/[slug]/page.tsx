@@ -4,6 +4,9 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getPaper, getPapers } from '@/lib/content';
 import Prose from '@/components/Prose';
 import PdfDownloadButton from '@/components/PdfDownloadButton';
+import AnimateOnView from '@/components/AnimateOnView';
+import ProseAnimated from '@/components/ProseAnimated';
+import ExternalLink from '@/components/ExternalLink';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -40,23 +43,29 @@ export default async function PaperPage({ params }: Props) {
     <article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
 
-      <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Research · {fmt(p.date)}</p>
-      <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{p.title}</h1>
-      <p className="mt-3 text-muted">{p.authors.join(', ')}</p>
+      <AnimateOnView>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Research · {fmt(p.date)}</p>
+        <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{p.title}</h1>
+        <p className="mt-3 text-muted">{p.authors.join(', ')}</p>
+      </AnimateOnView>
 
-      <div className="mt-8 rounded-2xl border border-line bg-white p-6 sm:p-8">
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Abstract</p>
-        <p className="mt-3 leading-relaxed">{p.abstract}</p>
-        {p.pdf && (
-          <div className="mt-6">
-            <PdfDownloadButton href={p.pdf} variant="primary" />
-          </div>
-        )}
-      </div>
+      <AnimateOnView delay={80}>
+        <div className="mt-8 rounded-2xl border border-line bg-white p-6 sm:p-8">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Abstract</p>
+          <p className="mt-3 leading-relaxed">{p.abstract}</p>
+          {p.pdf && (
+            <div className="mt-6">
+              <PdfDownloadButton href={p.pdf} variant="primary" />
+            </div>
+          )}
+        </div>
+      </AnimateOnView>
 
-      <Prose>
-        <MDXRemote source={p.content} />
-      </Prose>
+      <ProseAnimated>
+        <Prose>
+          <MDXRemote source={p.content} components={{ a: ExternalLink }} />
+        </Prose>
+      </ProseAnimated>
     </article>
   );
 }
