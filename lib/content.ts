@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import type { z } from 'zod';
-import { noticiaSchema, paperSchema, type Noticia, type Paper } from './schemas';
+import { noticiaSchema, paperSchema, perspectivaSchema, type Noticia, type Paper, type Perspectiva } from './schemas';
 
 export type Entry<T> = T & { slug: string; content: string };
 
@@ -55,4 +55,15 @@ export function getPapers(opts: Opts = {}): Entry<Paper>[] {
 
 export function getPaper(slug: string, opts: Opts = {}): Entry<Paper> | undefined {
   return getPapers({ ...opts }).find((p) => p.slug === slug);
+}
+
+export function getPerspectivas(opts: Opts = {}): Entry<Perspectiva>[] {
+  return visible(
+    loadCollection(path.join(opts.baseDir ?? defaultBase(), 'perspectivas'), perspectivaSchema),
+    opts,
+  );
+}
+
+export function getPerspectiva(slug: string, opts: Opts = {}): Entry<Perspectiva> | undefined {
+  return getPerspectivas({ ...opts }).find((p) => p.slug === slug);
 }
