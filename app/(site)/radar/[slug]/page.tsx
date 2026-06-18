@@ -10,9 +10,9 @@ import ExternalLink from '@/components/ExternalLink';
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return getNoticias().map((n) => ({ slug: n.slug }));
+  return getNoticias().map((n) => ({ slug: n.slug })); // só published
 }
-export const dynamicParams = false;
+export const dynamicParams = false; // slug fora da lista => 404
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
