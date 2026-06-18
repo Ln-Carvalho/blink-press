@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { noticiaSchema, paperSchema, CATEGORIES } from '../lib/schemas';
+import { noticiaSchema, paperSchema, perspectivaSchema, CATEGORIES, PERSPECTIVA_CATEGORIES } from '../lib/schemas';
 
 const noticiaOk = {
   title: 'Pix parcelado chega às maquininhas',
@@ -50,5 +50,33 @@ describe('paperSchema', () => {
   });
   it('exige ao menos um autor', () => {
     expect(() => paperSchema.parse({ ...paperOk, authors: [] })).toThrow();
+  });
+});
+
+describe('perspectivaSchema', () => {
+  const perspectivaOk = {
+    title: 'Análise de teste',
+    date: '2026-06-18',
+    category: 'Tributário',
+    summary: 'Resumo da análise.',
+    status: 'published',
+  };
+  it('aceita frontmatter válido e coage a data', () => {
+    const r = perspectivaSchema.parse(perspectivaOk);
+    expect(r.date).toBeInstanceOf(Date);
+    expect(r.category).toBe('Tributário');
+  });
+  it('aceita author opcional', () => {
+    expect(perspectivaSchema.parse({ ...perspectivaOk, author: 'Blink Team' }).author).toBe('Blink Team');
+    expect(perspectivaSchema.parse(perspectivaOk).author).toBeUndefined();
+  });
+  it('rejeita categoria fora do enum', () => {
+    expect(() => perspectivaSchema.parse({ ...perspectivaOk, category: 'Brasil' })).toThrow();
+  });
+  it('rejeita status desconhecido', () => {
+    expect(() => perspectivaSchema.parse({ ...perspectivaOk, status: 'rascunho' })).toThrow();
+  });
+  it('expõe as 5 categorias editoriais', () => {
+    expect(PERSPECTIVA_CATEGORIES).toEqual(['Tributário', 'Operações', 'Tecnologia', 'Mercado', 'Regulação']);
   });
 });
