@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const fmt = (d: Date) => d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
 
-export default function PerspectivásPage() {
+export default function PerspectiivasPage() {
   const perspectivas = getPerspectivas();
   const [destaque, ...resto] = perspectivas;
 
