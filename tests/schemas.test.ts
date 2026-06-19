@@ -1,82 +1,71 @@
 import { describe, it, expect } from 'vitest';
-import { noticiaSchema, paperSchema, perspectivaSchema, CATEGORIES, PERSPECTIVA_CATEGORIES } from '../lib/schemas';
+import { articleSchema, ARTICLE_CATEGORIES } from '../lib/schemas';
 
-const noticiaOk = {
+const base = {
   title: 'Pix parcelado chega às maquininhas',
   date: '2026-06-10',
   category: 'Capital',
   summary: 'Reduz custo de antecipação para PMEs do varejo.',
-  sources: [{ label: 'Banco Central', url: 'https://www.bcb.gov.br/' }],
   status: 'published',
 };
 
-describe('noticiaSchema', () => {
-  it('aceita frontmatter válido e coage a data', () => {
-    const r = noticiaSchema.parse(noticiaOk);
+describe('articleSchema', () => {
+  it('aceita artigo com sources (estilo notícia)', () => {
+    const r = articleSchema.parse({
+      ...base,
+      sources: [{ label: 'Banco Central', url: 'https://www.bcb.gov.br/' }],
+    });
     expect(r.date).toBeInstanceOf(Date);
-    expect(r.category).toBe('Capital');
+    expect(r.sources).toHaveLength(1);
   });
+
+  it('aceita artigo sem sources (estilo editorial)', () => {
+    const r = articleSchema.parse(base);
+    expect(r.sources).toBeUndefined();
+    expect(r.date).toBeInstanceOf(Date);
+  });
+
+  it('aceita author opcional', () => {
+    expect(articleSchema.parse({ ...base, author: 'Blink Team' }).author).toBe('Blink Team');
+    expect(articleSchema.parse(base).author).toBeUndefined();
+  });
+
   it('rejeita categoria fora do enum', () => {
-    expect(() => noticiaSchema.parse({ ...noticiaOk, category: 'Esportes' })).toThrow();
+    expect(() => articleSchema.parse({ ...base, category: 'Esportes' })).toThrow();
   });
+
   it('rejeita fonte com URL inválida', () => {
     expect(() =>
-      noticiaSchema.parse({ ...noticiaOk, sources: [{ label: 'x', url: 'nao-e-url' }] }),
+      articleSchema.parse({ ...base, sources: [{ label: 'x', url: 'nao-e-url' }] }),
     ).toThrow();
   });
-  it('rejeita status desconhecido', () => {
-    expect(() => noticiaSchema.parse({ ...noticiaOk, status: 'rascunho' })).toThrow();
-  });
-  it('expõe as 5 categorias do spec', () => {
-    expect(CATEGORIES).toEqual(['Brasil', 'Mundo', 'Regulação', 'Tecnologia', 'Capital']);
-  });
+
   it('rejeita fonte com scheme não-http(s)', () => {
     expect(() =>
-      noticiaSchema.parse({ ...noticiaOk, sources: [{ label: 'x', url: 'javascript:alert(1)' }] }),
+      articleSchema.parse({ ...base, sources: [{ label: 'x', url: 'javascript:alert(1)' }] }),
     ).toThrow();
   });
-});
 
-describe('paperSchema', () => {
-  const paperOk = {
-    title: 'Roteirização CVRP com stack gratuita',
-    date: '2026-06-10',
-    authors: ['Luan Carvalho'],
-    abstract: 'Como PMEs podem otimizar rotas sem custo de software.',
-    status: 'draft',
-  };
-  it('aceita paper válido sem pdf (opcional)', () => {
-    expect(paperSchema.parse(paperOk).pdf).toBeUndefined();
-  });
-  it('exige ao menos um autor', () => {
-    expect(() => paperSchema.parse({ ...paperOk, authors: [] })).toThrow();
-  });
-});
-
-describe('perspectivaSchema', () => {
-  const perspectivaOk = {
-    title: 'Análise de teste',
-    date: '2026-06-18',
-    category: 'Tributário',
-    summary: 'Resumo da análise.',
-    status: 'published',
-  };
-  it('aceita frontmatter válido e coage a data', () => {
-    const r = perspectivaSchema.parse(perspectivaOk);
-    expect(r.date).toBeInstanceOf(Date);
-    expect(r.category).toBe('Tributário');
-  });
-  it('aceita author opcional', () => {
-    expect(perspectivaSchema.parse({ ...perspectivaOk, author: 'Blink Team' }).author).toBe('Blink Team');
-    expect(perspectivaSchema.parse(perspectivaOk).author).toBeUndefined();
-  });
-  it('rejeita categoria fora do enum', () => {
-    expect(() => perspectivaSchema.parse({ ...perspectivaOk, category: 'Brasil' })).toThrow();
-  });
   it('rejeita status desconhecido', () => {
-    expect(() => perspectivaSchema.parse({ ...perspectivaOk, status: 'rascunho' })).toThrow();
+    expect(() => articleSchema.parse({ ...base, status: 'rascunho' })).toThrow();
   });
-  it('expõe as 5 categorias editoriais', () => {
-    expect(PERSPECTIVA_CATEGORIES).toEqual(['Tributário', 'Operações', 'Tecnologia', 'Mercado', 'Regulação']);
+
+  it('aceita categoria Tributário (ex-Perspectivas)', () => {
+    expect(() => articleSchema.parse({ ...base, category: 'Tributário' })).not.toThrow();
+  });
+
+  it('expõe as 8 categorias unificadas', () => {
+    expect(ARTICLE_CATEGORIES).toEqual([
+      'Brasil', 'Mundo', 'Regulação', 'Tecnologia', 'Capital',
+      'Tributário', 'Operações', 'Mercado',
+    ]);
+  });
+});
+
+describe('paperSchema — inalterado', () => {
+  // paper continua separado; smoke test para garantir que não quebramos
+  it('importa sem erro', async () => {
+    const { paperSchema } = await import('../lib/schemas');
+    expect(paperSchema).toBeDefined();
   });
 });

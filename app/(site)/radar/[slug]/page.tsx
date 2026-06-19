@@ -1,44 +1,47 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { getNoticia, getNoticias } from '@/lib/content';
+import { getArticle, getArticles } from '@/lib/content';
 import Prose from '@/components/Prose';
 import AnimateOnView from '@/components/AnimateOnView';
 import ProseAnimated from '@/components/ProseAnimated';
 import ExternalLink from '@/components/ExternalLink';
+import Link from 'next/link';
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return getNoticias().map((n) => ({ slug: n.slug })); // só published
+  return getArticles().map((a) => ({ slug: a.slug }));
 }
-export const dynamicParams = false; // slug fora da lista => 404
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const n = getNoticia(slug);
-  if (!n) return {};
+  const a = getArticle(slug);
+  if (!a) return {};
   return {
-    title: n.title,
-    description: n.summary,
-    openGraph: { title: n.title, description: n.summary, type: 'article', publishedTime: n.date.toISOString() },
+    title: a.title,
+    description: a.summary,
+    openGraph: { title: a.title, description: a.summary, type: 'article', publishedTime: a.date.toISOString() },
   };
 }
 
 const fmt = (d: Date) => d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
 
-export default async function NoticiaPage({ params }: Props) {
+export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-  const n = getNoticia(slug);
-  if (!n) notFound();
+  const a = getArticle(slug);
+  if (!a) notFound();
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'NewsArticle',
-    headline: n.title,
-    datePublished: n.date.toISOString(),
-    description: n.summary,
-    author: { '@type': 'Organization', name: 'Blink Group', url: 'https://blinkgroup.com.br' },
+    '@type': 'Article',
+    headline: a.title,
+    datePublished: a.date.toISOString(),
+    description: a.summary,
+    author: a.author
+      ? { '@type': 'Person', name: a.author }
+      : { '@type': 'Organization', name: 'Blink Group', url: 'https://blinkgroup.com.br' },
     publisher: { '@type': 'Organization', name: 'Blink Group' },
   };
 
@@ -47,37 +50,51 @@ export default async function NoticiaPage({ params }: Props) {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
 
       <AnimateOnView>
-        <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{n.category} · {fmt(n.date)}</p>
-        <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{n.title}</h1>
+        <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{a.category} · {fmt(a.date)}</p>
+        <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{a.title}</h1>
       </AnimateOnView>
 
       <AnimateOnView delay={80}>
         <div className="mt-8 rounded-r-xl border-l-4 border-orange bg-white py-4 pl-5 pr-4">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Por que isso importa para sua PME</p>
-          <p className="mt-2 text-lg leading-relaxed">{n.summary}</p>
+          <p className="mt-2 text-lg leading-relaxed">{a.summary}</p>
         </div>
       </AnimateOnView>
 
       <ProseAnimated>
         <Prose>
-          <MDXRemote source={n.content} components={{ a: ExternalLink }} />
+          <MDXRemote source={a.content} components={{ a: ExternalLink }} />
         </Prose>
       </ProseAnimated>
 
+      {a.sources && a.sources.length > 0 && (
+        <AnimateOnView>
+          <footer className="mt-14 border-t border-line pt-6">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Fontes</p>
+            <ul className="mt-3 space-y-2 text-sm">
+              {a.sources.map((s) => (
+                <li key={s.url}>
+                  <a
+                    href={s.url}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    className="text-orange underline underline-offset-2 decoration-orange/40 hover:decoration-orange"
+                  >
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </footer>
+        </AnimateOnView>
+      )}
+
       <AnimateOnView>
-        <footer className="mt-14 border-t border-line pt-6">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Fontes</p>
-          <ul className="mt-3 space-y-2 text-sm">
-            {n.sources.map((s) => (
-              <li key={s.url}>
-                <a href={s.url} rel="noopener noreferrer" target="_blank"
-                  className="text-orange underline underline-offset-2 decoration-orange/40 hover:decoration-orange">
-                  {s.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </footer>
+        <div className="mt-10 border-t border-line pt-6">
+          <Link href="/radar" className="font-mono text-xs uppercase tracking-[0.2em] text-orange hover:text-red transition-colors">
+            ← Radar
+          </Link>
+        </div>
       </AnimateOnView>
     </article>
   );

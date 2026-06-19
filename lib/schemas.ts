@@ -1,14 +1,17 @@
 import { z } from 'zod';
 
-export const CATEGORIES = ['Brasil', 'Mundo', 'Regulação', 'Tecnologia', 'Capital'] as const;
+export const ARTICLE_CATEGORIES = [
+  'Brasil', 'Mundo', 'Regulação', 'Tecnologia', 'Capital',
+  'Tributário', 'Operações', 'Mercado',
+] as const;
 
 export const statusSchema = z.enum(['draft', 'published']);
 
-export const noticiaSchema = z.object({
+export const articleSchema = z.object({
   title: z.string().min(1),
   date: z.coerce.date(),
-  category: z.enum(CATEGORIES),
-  summary: z.string().min(1), // "por que isso importa para sua PME"
+  category: z.enum(ARTICLE_CATEGORIES),
+  summary: z.string().min(1),
   sources: z
     .array(
       z.object({
@@ -16,7 +19,9 @@ export const noticiaSchema = z.object({
         url: z.string().url().regex(/^https?:\/\//, 'apenas http(s)'),
       }),
     )
-    .min(1),
+    .min(1)
+    .optional(),
+  author: z.string().optional(),
   status: statusSchema,
 });
 
@@ -29,17 +34,5 @@ export const paperSchema = z.object({
   status: statusSchema,
 });
 
-export const PERSPECTIVA_CATEGORIES = ['Tributário', 'Operações', 'Tecnologia', 'Mercado', 'Regulação'] as const;
-
-export const perspectivaSchema = z.object({
-  title: z.string().min(1),
-  date: z.coerce.date(),
-  category: z.enum(PERSPECTIVA_CATEGORIES),
-  summary: z.string().min(1),
-  status: statusSchema,
-  author: z.string().optional(),
-});
-
-export type Noticia = z.infer<typeof noticiaSchema>;
+export type Article = z.infer<typeof articleSchema>;
 export type Paper = z.infer<typeof paperSchema>;
-export type Perspectiva = z.infer<typeof perspectivaSchema>;

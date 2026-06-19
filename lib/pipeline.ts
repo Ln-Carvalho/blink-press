@@ -1,5 +1,5 @@
 import matter from 'gray-matter';
-import { noticiaSchema } from './schemas';
+import { articleSchema } from './schemas';
 
 const FILENAME_RE = /^\d{4}-\d{2}-\d{2}-[a-z0-9-]+\.mdx$/;
 
@@ -19,7 +19,7 @@ export function parsePipelineOutput(text: string): { filename: string; mdx: stri
   }
 
   // força draft independentemente do que a IA escreveu (gate de curadoria humana)
-  const validated = noticiaSchema.parse({ ...data, status: 'draft' });
+  const validated = articleSchema.parse({ ...data, status: 'draft' });
 
   const fm = [
     `title: ${JSON.stringify(validated.title)}`,
@@ -27,7 +27,7 @@ export function parsePipelineOutput(text: string): { filename: string; mdx: stri
     `category: ${validated.category}`,
     `summary: ${JSON.stringify(validated.summary)}`,
     'sources:',
-    ...validated.sources.flatMap((s) => [`  - label: ${JSON.stringify(s.label)}`, `    url: ${JSON.stringify(s.url)}`]),
+    ...(validated.sources ?? []).flatMap((s) => [`  - label: ${JSON.stringify(s.label)}`, `    url: ${JSON.stringify(s.url)}`]),
     'status: draft',
   ].join('\n');
 

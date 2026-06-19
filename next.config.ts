@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     return [
       { source: '/admin', destination: '/keystatic', permanent: false },
       { source: '/admin/:path*', destination: '/keystatic/:path*', permanent: false },
+      { source: '/radar/perspectivas/:slug*', destination: '/radar/:slug*', permanent: true },
     ];
   },
 };

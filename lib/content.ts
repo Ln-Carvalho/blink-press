@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import matter from 'gray-matter';
 import type { z } from 'zod';
-import { noticiaSchema, paperSchema, perspectivaSchema, type Noticia, type Paper, type Perspectiva } from './schemas';
+import { articleSchema, paperSchema, type Article, type Paper } from './schemas';
 
 export type Entry<T> = T & { slug: string; content: string };
 
@@ -19,7 +19,6 @@ export function loadCollection<S extends z.ZodType>(
       const { data, content } = matter(raw);
       const parsed = schema.safeParse(data);
       if (!parsed.success) {
-        // build falha aqui — segunda linha de defesa atrás do Keystatic
         throw new Error(`Frontmatter inválido em ${file}: ${parsed.error.message}`);
       }
       return { ...(parsed.data as object), slug: file.replace(/\.mdx$/, ''), content } as Entry<z.infer<S>>;
@@ -35,15 +34,15 @@ function visible<T extends { status: string; date: Date }>(entries: Entry<T>[], 
     .sort((a, b) => b.date.getTime() - a.date.getTime());
 }
 
-export function getNoticias(opts: Opts = {}): Entry<Noticia>[] {
+export function getArticles(opts: Opts = {}): Entry<Article>[] {
   return visible(
-    loadCollection(path.join(opts.baseDir ?? defaultBase(), 'radar'), noticiaSchema),
+    loadCollection(path.join(opts.baseDir ?? defaultBase(), 'radar'), articleSchema),
     opts,
   );
 }
 
-export function getNoticia(slug: string, opts: Opts = {}): Entry<Noticia> | undefined {
-  return getNoticias({ ...opts }).find((n) => n.slug === slug);
+export function getArticle(slug: string, opts: Opts = {}): Entry<Article> | undefined {
+  return getArticles({ ...opts }).find((a) => a.slug === slug);
 }
 
 export function getPapers(opts: Opts = {}): Entry<Paper>[] {
@@ -55,15 +54,4 @@ export function getPapers(opts: Opts = {}): Entry<Paper>[] {
 
 export function getPaper(slug: string, opts: Opts = {}): Entry<Paper> | undefined {
   return getPapers({ ...opts }).find((p) => p.slug === slug);
-}
-
-export function getPerspectivas(opts: Opts = {}): Entry<Perspectiva>[] {
-  return visible(
-    loadCollection(path.join(opts.baseDir ?? defaultBase(), 'perspectivas'), perspectivaSchema),
-    opts,
-  );
-}
-
-export function getPerspectiva(slug: string, opts: Opts = {}): Entry<Perspectiva> | undefined {
-  return getPerspectivas({ ...opts }).find((p) => p.slug === slug);
 }
