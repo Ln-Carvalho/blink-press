@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
-import { getNoticias } from '@/lib/content';
+import { getArticles } from '@/lib/content';
 import NewsletterForm from '@/components/NewsletterForm';
 import AnimateOnView from '@/components/AnimateOnView';
 
@@ -26,8 +26,8 @@ function Chip({ children, active = false }: { children: React.ReactNode; active?
 }
 
 export default function RadarPage() {
-  const noticias = getNoticias();
-  const [destaque, ...resto] = noticias;
+  const articles = getArticles();
+  const [destaque, ...resto] = articles;
 
   return (
     <div className="space-y-14">
@@ -60,18 +60,18 @@ export default function RadarPage() {
       )}
 
       <section className="space-y-10">
-        {resto.map((n, i) => (
-          <AnimateOnView key={n.slug} delay={Math.min(i, 4) * 80}>
+        {resto.map((a, i) => (
+          <AnimateOnView key={a.slug} delay={Math.min(i, 4) * 80}>
             <article className="group">
-              <Link href={`/radar/${n.slug}`} className="block">
+              <Link href={`/radar/${a.slug}`} className="block">
                 <div className="flex items-center gap-3">
-                  <Chip>{n.category}</Chip>
-                  <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(n.date)}</span>
+                  <Chip>{a.category}</Chip>
+                  <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(a.date)}</span>
                 </div>
                 <h2 className="mt-3 font-display text-2xl font-semibold leading-snug transition-colors group-hover:text-orange">
-                  {n.title}
+                  {a.title}
                 </h2>
-                <p className="mt-2 text-muted">{n.summary}</p>
+                <p className="mt-2 text-muted">{a.summary}</p>
               </Link>
             </article>
           </AnimateOnView>
@@ -90,22 +90,6 @@ export default function RadarPage() {
             className="mt-4 inline-flex min-h-[44px] items-center font-semibold text-orange transition-colors hover:text-red"
           >
             Conhecer o programa →
-          </Link>
-        </aside>
-      </AnimateOnView>
-
-      <AnimateOnView>
-        <aside className="rounded-2xl border border-line bg-white p-6 sm:p-8">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Editorial</p>
-          <h2 className="mt-2 font-display text-xl font-semibold">Blink Perspectivas</h2>
-          <p className="mt-2 text-sm text-muted">
-            Análises sobre o que muda no cenário e o que isso representa para a operação do seu negócio.
-          </p>
-          <Link
-            href="/radar/perspectivas"
-            className="mt-4 inline-flex min-h-[44px] items-center font-semibold text-orange transition-colors hover:text-red"
-          >
-            Ler as perspectivas →
           </Link>
         </aside>
       </AnimateOnView>
