@@ -22,6 +22,8 @@ export const articleSchema = z.object({
     .min(1)
     .optional(),
   author: z.string().optional(),
+  authorRole: z.string().optional(),
+  authorPhoto: z.string().optional(),
   status: statusSchema,
 });
 

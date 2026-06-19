@@ -6,6 +6,7 @@ import Prose from '@/components/Prose';
 import AnimateOnView from '@/components/AnimateOnView';
 import ProseAnimated from '@/components/ProseAnimated';
 import ExternalLink from '@/components/ExternalLink';
+import AuthorCard from '@/components/AuthorCard';
 import Link from 'next/link';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -52,6 +53,9 @@ export default async function ArticlePage({ params }: Props) {
       <AnimateOnView>
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{a.category} · {fmt(a.date)}</p>
         <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{a.title}</h1>
+        {a.author && (
+          <AuthorCard name={a.author} role={a.authorRole} photo={a.authorPhoto} />
+        )}
       </AnimateOnView>
 
       <AnimateOnView delay={80}>

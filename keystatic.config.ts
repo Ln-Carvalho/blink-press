@@ -45,6 +45,8 @@ export default config({
           { label: 'Fontes (opcional)', itemLabel: (p) => p.fields.label.value || 'fonte' },
         ),
         author: fields.text({ label: 'Autor (opcional)' }),
+        authorRole: fields.text({ label: 'Cargo do autor (opcional)' }),
+        authorPhoto: fields.text({ label: 'URL da foto do autor (opcional)' }),
         content: fields.mdx({ label: 'Conteúdo' }),
       },
     }),
