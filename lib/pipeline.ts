@@ -27,7 +27,7 @@ export function parsePipelineOutput(text: string): { filename: string; mdx: stri
     `category: ${validated.category}`,
     `summary: ${JSON.stringify(validated.summary)}`,
     'sources:',
-    ...validated.sources.flatMap((s) => [`  - label: ${JSON.stringify(s.label)}`, `    url: ${JSON.stringify(s.url)}`]),
+    ...(validated.sources ?? []).flatMap((s) => [`  - label: ${JSON.stringify(s.label)}`, `    url: ${JSON.stringify(s.url)}`]),
     'status: draft',
   ].join('\n');
 
