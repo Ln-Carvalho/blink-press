@@ -29,5 +29,17 @@ export const paperSchema = z.object({
   status: statusSchema,
 });
 
+export const PERSPECTIVA_CATEGORIES = ['Tributário', 'Operações', 'Tecnologia', 'Mercado', 'Regulação'] as const;
+
+export const perspectivaSchema = z.object({
+  title: z.string().min(1),
+  date: z.coerce.date(),
+  category: z.enum(PERSPECTIVA_CATEGORIES),
+  summary: z.string().min(1),
+  status: statusSchema,
+  author: z.string().optional(),
+});
+
 export type Noticia = z.infer<typeof noticiaSchema>;
 export type Paper = z.infer<typeof paperSchema>;
+export type Perspectiva = z.infer<typeof perspectivaSchema>;

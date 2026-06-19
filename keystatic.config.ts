@@ -1,5 +1,5 @@
 import { config, collection, fields } from '@keystatic/core';
-import { CATEGORIES } from './lib/schemas';
+import { CATEGORIES, PERSPECTIVA_CATEGORIES } from './lib/schemas';
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -71,6 +71,38 @@ export default config({
         }),
         abstract: fields.text({ label: 'Abstract', multiline: true, validation: { isRequired: true } }),
         pdf: fields.text({ label: 'URL do PDF (opcional)' }),
+        content: fields.mdx({ label: 'Conteúdo' }),
+      },
+    }),
+    perspectivas: collection({
+      label: 'Perspectivas (análise editorial)',
+      slugField: 'title',
+      path: 'content/perspectivas/*',
+      format: { contentField: 'content' },
+      entryLayout: 'content',
+      columns: ['status', 'date', 'category'],
+      schema: {
+        title: fields.slug({ name: { label: 'Título' } }),
+        status: fields.select({
+          label: 'Status',
+          options: [
+            { label: 'Draft (rascunho)', value: 'draft' },
+            { label: 'Published (no ar após deploy)', value: 'published' },
+          ],
+          defaultValue: 'draft',
+        }),
+        date: fields.date({ label: 'Data', validation: { isRequired: true } }),
+        category: fields.select({
+          label: 'Categoria',
+          options: PERSPECTIVA_CATEGORIES.map((c) => ({ label: c, value: c })),
+          defaultValue: 'Tributário',
+        }),
+        summary: fields.text({
+          label: 'Em resumo',
+          multiline: true,
+          validation: { isRequired: true },
+        }),
+        author: fields.text({ label: 'Autor (opcional)' }),
         content: fields.mdx({ label: 'Conteúdo' }),
       },
     }),
