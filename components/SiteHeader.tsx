@@ -50,7 +50,7 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
              * Estado B: pill escuro semi-transparente, quase borda a borda,
              * backdrop-blur para efeito de vidro sobre o conteúdo.
              */
-            ? 'bg-ink/80 backdrop-blur-md mx-3 mt-3 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.35)] px-5 h-14'
+            ? 'bg-ink/55 backdrop-blur-md mx-auto mt-3 w-[calc(100%-2rem)] max-w-5xl rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.25)] px-5 h-14'
             /*
              * Estado A: pill sólido escuro, cantos arredondados, margem leve do topo.
              */
@@ -154,7 +154,7 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
         <div
           className={`md:hidden flex flex-col gap-3 px-6 py-5 ${
             scrolled
-              ? 'mx-3 mt-1 bg-ink/90 backdrop-blur-md rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.35)]'
+              ? 'mx-auto mt-1 w-[calc(100%-2rem)] max-w-5xl bg-ink/55 backdrop-blur-md rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.25)]'
               : 'mx-4 bg-ink rounded-b-2xl border-t border-white/10'
           }`}
         >
