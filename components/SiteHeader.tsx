@@ -48,8 +48,8 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
       <div
         className={`transition-all duration-300 ease-in-out flex items-center justify-between ${
           scrolled
-            ? 'bg-paper mx-4 mt-3 rounded-full shadow-[0_4px_28px_rgba(0,0,0,0.10)] px-5 h-14'
-            : 'bg-ink px-6 h-16'
+            ? 'bg-paper mx-auto mt-3 w-[calc(100%-2rem)] max-w-5xl rounded-full shadow-[0_4px_28px_rgba(0,0,0,0.10)] px-5 h-14'
+            : 'bg-ink mx-4 mt-3 rounded-2xl px-6 h-16'
         }`}
       >
         {/* Selo de seção */}
@@ -154,21 +154,13 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
         </button>
       </div>
 
-      {/* ─── Borda gradiente inferior — visível apenas no Estado A ─── */}
-      <div
-        className={`h-px w-full brand-gradient transition-opacity duration-300 ${
-          scrolled ? 'opacity-0' : 'opacity-100'
-        }`}
-        aria-hidden="true"
-      />
-
       {/* ─── Menu mobile ─── */}
       {mobileOpen && (
         <div
           className={`md:hidden flex flex-col gap-3 px-6 py-5 ${
             scrolled
-              ? 'mx-4 mb-1 bg-paper rounded-2xl shadow-[0_4px_28px_rgba(0,0,0,0.10)]'
-              : 'bg-ink border-t border-white/10'
+              ? 'mx-auto mt-1 w-[calc(100%-2rem)] max-w-5xl bg-paper rounded-2xl shadow-[0_4px_28px_rgba(0,0,0,0.10)]'
+              : 'mx-4 bg-ink rounded-b-2xl border-t border-white/10'
           }`}
         >
           {(scrolled ? NAV_FULL : NAV_SHORT).map((item) =>
