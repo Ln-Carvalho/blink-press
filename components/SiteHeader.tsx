@@ -29,7 +29,6 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
-  // Detecta scroll e atualiza estado
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD);
     onScroll();
@@ -37,7 +36,6 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Fecha menu mobile ao navegar
   useEffect(() => setMobileOpen(false), [pathname]);
 
   const isActive = (href: string) => pathname.startsWith(href);
@@ -48,33 +46,36 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
       <div
         className={`transition-all duration-300 ease-in-out flex items-center justify-between ${
           scrolled
-            ? 'bg-paper mx-auto mt-3 w-[calc(100%-2rem)] max-w-5xl rounded-full shadow-[0_4px_28px_rgba(0,0,0,0.10)] px-5 h-14'
+            /*
+             * Estado B: pill escuro semi-transparente, quase borda a borda,
+             * backdrop-blur para efeito de vidro sobre o conteúdo.
+             */
+            ? 'bg-ink/80 backdrop-blur-md mx-3 mt-3 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.35)] px-5 h-14'
+            /*
+             * Estado A: pill sólido escuro, cantos arredondados, margem leve do topo.
+             */
             : 'bg-ink mx-4 mt-3 rounded-2xl px-6 h-16'
         }`}
       >
-        {/* Selo de seção */}
-        <span
-          className={`font-mono text-[11px] tracking-[0.18em] uppercase font-medium select-none transition-colors duration-300 ${
-            scrolled ? 'text-ink' : 'text-paper'
-          }`}
-        >
+        {/* Selo de seção — sempre cream (fundo sempre escuro) */}
+        <span className="font-mono text-[11px] tracking-[0.18em] uppercase font-medium select-none text-paper">
           {sectionLabel}
         </span>
 
-        {/* Navegação desktop */}
+        {/* ─── Navegação desktop ─── */}
         <nav
           className="hidden md:flex items-center gap-5 text-sm font-medium"
           aria-label="Navegação principal"
         >
           {scrolled ? (
-            /* ── Estado B: nav completa + botão ── */
+            /* Estado B: nav completa em cream */
             <>
               {NAV_FULL.map((item) =>
                 item.external ? (
                   <a
                     key={item.label}
                     href={item.href}
-                    className="text-ink hover:text-orange transition-colors"
+                    className="text-paper/70 hover:text-paper transition-colors"
                   >
                     {item.label}
                   </a>
@@ -83,7 +84,7 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
                     key={item.label}
                     href={item.href}
                     className={`relative pb-0.5 transition-colors ${
-                      isActive(item.href) ? 'text-ink' : 'text-ink hover:text-orange'
+                      isActive(item.href) ? 'text-paper' : 'text-paper/70 hover:text-paper'
                     }`}
                   >
                     {item.label}
@@ -105,7 +106,7 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
               </a>
             </>
           ) : (
-            /* ── Estado A: apenas Radar e Research ── */
+            /* Estado A: apenas Radar e Research */
             NAV_SHORT.map((item) => (
               <Link
                 key={item.label}
@@ -126,28 +127,22 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
           )}
         </nav>
 
-        {/* Hambúrguer mobile */}
+        {/* ─── Hambúrguer mobile ─── */}
         <button
           type="button"
           onClick={() => setMobileOpen((o) => !o)}
           aria-label={mobileOpen ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={mobileOpen}
-          className={`md:hidden p-2 -mr-2 transition-colors ${
-            scrolled ? 'text-ink' : 'text-paper'
-          }`}
+          className="md:hidden p-2 -mr-2 text-paper"
         >
           {mobileOpen ? (
-            <svg
-              width="20" height="20" viewBox="0 0 20 20"
-              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-            >
+            <svg width="20" height="20" viewBox="0 0 20 20"
+              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M4 4l12 12M16 4L4 16" />
             </svg>
           ) : (
-            <svg
-              width="20" height="20" viewBox="0 0 20 20"
-              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-            >
+            <svg width="20" height="20" viewBox="0 0 20 20"
+              fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               <path d="M3 6h14M3 10h14M3 14h14" />
             </svg>
           )}
@@ -159,7 +154,7 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
         <div
           className={`md:hidden flex flex-col gap-3 px-6 py-5 ${
             scrolled
-              ? 'mx-auto mt-1 w-[calc(100%-2rem)] max-w-5xl bg-paper rounded-2xl shadow-[0_4px_28px_rgba(0,0,0,0.10)]'
+              ? 'mx-3 mt-1 bg-ink/90 backdrop-blur-md rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.35)]'
               : 'mx-4 bg-ink rounded-b-2xl border-t border-white/10'
           }`}
         >
@@ -168,7 +163,7 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
               <a
                 key={item.label}
                 href={item.href}
-                className={`text-sm font-medium ${scrolled ? 'text-ink' : 'text-paper'}`}
+                className="text-sm font-medium text-paper/70"
               >
                 {item.label}
               </a>
@@ -177,11 +172,7 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
                 key={item.label}
                 href={item.href}
                 className={`text-sm font-medium ${
-                  isActive(item.href)
-                    ? 'brand-gradient-text'
-                    : scrolled
-                    ? 'text-ink'
-                    : 'text-paper'
+                  isActive(item.href) ? 'brand-gradient-text' : 'text-paper'
                 }`}
               >
                 {item.label}
