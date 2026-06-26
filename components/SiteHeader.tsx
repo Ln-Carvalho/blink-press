@@ -36,10 +36,10 @@ export default function SiteHeader() {
     <>
       {/* ─── Pill header ─── */}
       <nav
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-6 py-3 rounded-full transition-all duration-400 ease-in-out w-[90%] max-w-5xl text-ink ${
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-6 py-3 rounded-full w-[90%] max-w-5xl text-ink transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
           scrolled
-            ? 'bg-[#FDFAF4]/80 backdrop-blur-md border border-[#FF6A00]/15 shadow-[0_8px_32px_rgba(0,0,0,0.10)]'
-            : 'bg-[#FDFAF4] border border-transparent shadow-none'
+            ? 'bg-[#FDFAF4]/80 backdrop-blur-md border border-[#FF6A00]/15 shadow-[0_8px_32px_rgba(0,0,0,0.10)] translate-y-0 scale-100'
+            : 'bg-[#FDFAF4] border border-transparent shadow-none -translate-y-2 scale-[0.97]'
         }`}
         aria-label="Navegação principal"
         style={scrolled ? { backdropFilter: 'blur(16px)' } : undefined}
