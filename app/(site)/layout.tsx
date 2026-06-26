@@ -7,7 +7,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
     <>
       <SiteHeader />
 
-      <main className="flex-1 mx-auto w-full max-w-3xl px-5 py-10 sm:py-14">{children}</main>
+      <main className="flex-1 mx-auto w-full max-w-3xl px-5 pt-28 pb-10 sm:pb-14">{children}</main>
 
       <footer className="border-t border-line mt-8">
         <div className="mx-auto max-w-3xl px-5 py-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
