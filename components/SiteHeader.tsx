@@ -1,19 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import logo from '@/public/brand/LogoBlink_Preta.png';
 
 const NAV_ITEMS = [
-  { label: 'Radar',    href: '/radar'    },
-  { label: 'Research', href: '/research' },
+  { label: 'Sobre',        href: 'https://blinkgroup.com.br/#sobre',        external: true  },
+  { label: 'Como Atuamos', href: 'https://blinkgroup.com.br/#como-atuamos', external: true  },
+  { label: 'Portfólio',    href: 'https://blinkgroup.com.br/#portfolio',    external: true  },
+  { label: 'Fundadores',   href: 'https://blinkgroup.com.br/#fundadores',   external: true  },
+  { label: 'Radar',        href: '/radar',                                  external: false },
+  { label: 'Research',     href: '/research',                               external: false },
+  { label: 'Contato',      href: 'https://blinkgroup.com.br/#contato',      external: true  },
 ];
 
-interface SiteHeaderProps {
-  sectionLabel?: string;
-}
-
-export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) {
+export default function SiteHeader() {
   const [scrolled, setScrolled]     = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
@@ -27,45 +30,65 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
 
   useEffect(() => setMobileOpen(false), [pathname]);
 
-  const isActive = (href: string) => pathname.startsWith(href);
+  const isActive = (href: string) => !href.startsWith('http') && pathname.startsWith(href);
 
   return (
     <>
       {/* ─── Pill header ─── */}
-      <header
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-6 py-3 rounded-full transition-all duration-400 ease-in-out w-[90%] max-w-5xl bg-paper/80 backdrop-blur-md text-ink border border-orange/15 ${
+      <nav
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-6 py-3 rounded-full transition-all duration-400 ease-in-out w-[90%] max-w-5xl bg-[#FDFAF4]/80 backdrop-blur-md text-ink border border-[#FF6A00]/15 ${
           scrolled ? 'shadow-[0_8px_32px_rgba(0,0,0,0.10)]' : 'shadow-[0_2px_12px_rgba(0,0,0,0.06)]'
         }`}
+        aria-label="Navegação principal"
+        style={{ backdropFilter: 'blur(16px)' }}
       >
-        {/* Selo de seção */}
-        <span className="font-mono text-[11px] tracking-[0.18em] uppercase font-medium select-none text-muted">
-          {sectionLabel}
-        </span>
+        {/* Logo */}
+        <div className="flex items-center gap-3">
+          <Link href="https://blinkgroup.com.br">
+            <Image
+              src={logo}
+              alt="Blink"
+              className="w-auto transition-all duration-300 h-8 lg:h-10"
+            />
+          </Link>
+        </div>
 
-        {/* ─── Navegação desktop ─── */}
-        <nav className="hidden md:flex items-center gap-5 text-sm font-medium" aria-label="Navegação principal">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`relative pb-0.5 transition-colors ${
-                isActive(item.href) ? 'text-ink' : 'text-muted hover:text-ink'
-              }`}
-            >
-              {item.label}
-              {isActive(item.href) && (
-                <span className="absolute bottom-0 left-0 w-full h-px brand-gradient" aria-hidden="true" />
-              )}
-            </Link>
-          ))}
+        {/* ─── Nav links desktop ─── */}
+        <div className="hidden lg:flex items-center gap-8 font-medium text-sm">
+          {NAV_ITEMS.map((item) =>
+            item.external ? (
+              <a
+                key={item.label}
+                href={item.href}
+                className="relative hover:text-orange py-1 transition-colors"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`relative py-1 transition-colors ${
+                  isActive(item.href) ? 'text-orange' : 'hover:text-orange'
+                }`}
+              >
+                {item.label}
+              </Link>
+            )
+          )}
+        </div>
 
+        {/* ─── CTA desktop ─── */}
+        <div className="hidden lg:block">
           <a
-            href="https://blinkgroup.com.br"
-            className="brand-gradient text-paper text-sm font-medium px-4 py-1.5 rounded-full ml-1 hover:opacity-90 transition-opacity whitespace-nowrap"
+            href="https://wa.me/5521990230538?text=Oi%2C%20tenho%20interesse%20na%20Blink."
+            target="_blank"
+            rel="noreferrer"
+            className="brand-gradient text-paper font-semibold text-sm px-6 py-2.5 rounded-full hover:scale-105 transition-transform inline-block relative overflow-hidden"
           >
-            ← Home
+            Fale Conosco
           </a>
-        </nav>
+        </div>
 
         {/* ─── Hambúrguer mobile ─── */}
         <button
@@ -73,37 +96,45 @@ export default function SiteHeader({ sectionLabel = 'RADAR' }: SiteHeaderProps) 
           onClick={() => setMobileOpen((o) => !o)}
           aria-label={mobileOpen ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={mobileOpen}
-          className="md:hidden p-2 -mr-2 text-ink"
+          className="lg:hidden p-2"
         >
           {mobileOpen ? (
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M4 4l12 12M16 4L4 16" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M18 6L6 18M6 6l12 12" />
             </svg>
           ) : (
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              <path d="M3 6h14M3 10h14M3 14h14" />
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           )}
         </button>
-      </header>
+      </nav>
 
-      {/* ─── Menu mobile (fora do pill, logo abaixo) ─── */}
+      {/* ─── Menu mobile ─── */}
       {mobileOpen && (
-        <div className="fixed top-[4.5rem] left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-5xl md:hidden flex flex-col gap-3 px-6 py-5 bg-paper/95 backdrop-blur-md rounded-2xl border border-orange/15 shadow-[0_8px_32px_rgba(0,0,0,0.10)]">
-          {NAV_ITEMS.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={`text-sm font-medium ${isActive(item.href) ? 'brand-gradient-text' : 'text-ink'}`}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div className="fixed top-[5rem] left-1/2 -translate-x-1/2 z-40 w-[90%] max-w-5xl lg:hidden flex flex-col gap-3 px-6 py-5 bg-[#FDFAF4]/95 backdrop-blur-md rounded-2xl border border-[#FF6A00]/15 shadow-[0_8px_32px_rgba(0,0,0,0.10)]">
+          {NAV_ITEMS.map((item) =>
+            item.external ? (
+              <a key={item.label} href={item.href} className="text-sm font-medium text-muted hover:text-ink transition-colors">
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                key={item.label}
+                href={item.href}
+                className={`text-sm font-medium ${isActive(item.href) ? 'text-orange' : 'text-ink'}`}
+              >
+                {item.label}
+              </Link>
+            )
+          )}
           <a
-            href="https://blinkgroup.com.br"
-            className="text-sm font-medium text-muted hover:text-ink transition-colors"
+            href="https://wa.me/5521990230538?text=Oi%2C%20tenho%20interesse%20na%20Blink."
+            target="_blank"
+            rel="noreferrer"
+            className="brand-gradient text-paper font-semibold text-sm px-6 py-2.5 rounded-full text-center mt-1 hover:opacity-90 transition-opacity"
           >
-            ← Home
+            Fale Conosco
           </a>
         </div>
       )}
