@@ -3,6 +3,7 @@ import { MuseoModerno, Plus_Jakarta_Sans, IBM_Plex_Mono } from 'next/font/google
 import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import Script from 'next/script';
 
 const display = MuseoModerno({ subsets: ['latin'], weight: ['500', '600', '700'], variable: '--font-museo' });
 const body = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta' });
@@ -18,6 +19,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body className="min-h-screen flex flex-col">{children}<Analytics /><SpeedInsights /></body>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-TMRBQ00WBE"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-TMRBQ00WBE');
+        `}
+      </Script>
     </html>
   );
 }
