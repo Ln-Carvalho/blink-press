@@ -36,11 +36,13 @@ export default function SiteHeader() {
     <>
       {/* ─── Pill header ─── */}
       <nav
-        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-6 py-3 rounded-full transition-all duration-400 ease-in-out w-[90%] max-w-5xl bg-[#FDFAF4]/80 backdrop-blur-md text-ink border border-[#FF6A00]/15 ${
-          scrolled ? 'shadow-[0_8px_32px_rgba(0,0,0,0.10)]' : 'shadow-[0_2px_12px_rgba(0,0,0,0.06)]'
+        className={`fixed top-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between px-6 py-3 rounded-full transition-all duration-400 ease-in-out w-[90%] max-w-5xl text-ink ${
+          scrolled
+            ? 'bg-[#FDFAF4]/80 backdrop-blur-md border border-[#FF6A00]/15 shadow-[0_8px_32px_rgba(0,0,0,0.10)]'
+            : 'bg-[#FDFAF4] border border-transparent shadow-none'
         }`}
         aria-label="Navegação principal"
-        style={{ backdropFilter: 'blur(16px)' }}
+        style={scrolled ? { backdropFilter: 'blur(16px)' } : undefined}
       >
         {/* Logo */}
         <div className="flex items-center gap-3">
