@@ -4,9 +4,10 @@ type Props = {
   name: string;
   role?: string;
   photo?: string;
+  linkedin?: string;
 };
 
-export default function AuthorCard({ name, role, photo }: Props) {
+export default function AuthorCard({ name, role, photo, linkedin }: Props) {
   return (
     <div className="mt-6 flex items-center gap-3">
       {photo ? (
@@ -25,7 +26,18 @@ export default function AuthorCard({ name, role, photo }: Props) {
         </div>
       )}
       <div className="flex flex-col">
-        <span className="text-sm font-semibold leading-tight">{name}</span>
+        {linkedin ? (
+          <a
+            href={linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-semibold leading-tight hover:text-orange transition-colors"
+          >
+            {name}
+          </a>
+        ) : (
+          <span className="text-sm font-semibold leading-tight">{name}</span>
+        )}
         {role && (
           <span className="font-mono text-xs uppercase tracking-[0.15em] text-muted">{role}</span>
         )}
