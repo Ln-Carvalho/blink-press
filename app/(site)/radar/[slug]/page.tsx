@@ -54,7 +54,12 @@ export default async function ArticlePage({ params }: Props) {
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{a.category} · {fmt(a.date)}</p>
         <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{a.title}</h1>
         {a.author && (
-          <AuthorCard name={a.author} role={a.authorRole} photo={a.authorPhoto} />
+          <AuthorCard
+            name={a.author}
+            role={a.authorRole}
+            photo={a.authorPhoto}
+            linkedin="https://linkedin.com/in/gustavo-ferreira-237821305"
+          />
         )}
       </AnimateOnView>
 
