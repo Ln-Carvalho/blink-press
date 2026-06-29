@@ -10,9 +10,9 @@ const NAV_ITEMS = [
   { label: 'Sobre',        href: 'https://blinkgroup.com.br/#sobre',        external: true  },
   { label: 'Como Atuamos', href: 'https://blinkgroup.com.br/#como-atuamos', external: true  },
   { label: 'Portfólio',    href: 'https://blinkgroup.com.br/#portfolio',    external: true  },
-  { label: 'Fundadores',   href: 'https://blinkgroup.com.br/#fundadores',   external: true  },
   { label: 'Radar',        href: '/radar',                                  external: false },
   { label: 'Research',     href: '/research',                               external: false },
+  { label: 'Fundadores',   href: 'https://blinkgroup.com.br/#fundadores',   external: true  },
   { label: 'Contato',      href: 'https://blinkgroup.com.br/#contato',      external: true  },
 ];
 
