@@ -61,7 +61,7 @@ export default async function ArticlePage({ params }: Props) {
       <AnimateOnView delay={80}>
         <div className="mt-8 rounded-r-xl border-l-4 border-orange bg-white py-4 pl-5 pr-4">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Por que isso importa para sua PME</p>
-          <p className="mt-2 text-lg leading-relaxed">{a.summary}</p>
+          <p className="mt-2 text-lg leading-relaxed text-justify hyphens-auto">{a.summary}</p>
         </div>
       </AnimateOnView>
 
