@@ -31,25 +31,27 @@ export default function RadarPage() {
 
   return (
     <div className="space-y-14">
-      <AnimateOnView>
-        <header>
+      <header>
+        <AnimateOnView>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Radar</p>
+        </AnimateOnView>
+        <AnimateOnView variant="clip-line" delay={80}>
           <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">
             Notícias que importam para sua PME
           </h1>
-        </header>
-      </AnimateOnView>
+        </AnimateOnView>
+      </header>
 
       {destaque && (
-        <AnimateOnView delay={80}>
+        <AnimateOnView variant="blur-rise" delay={160}>
           <article className="border-b border-line pb-12">
             <div className="flex items-center gap-3">
               <Chip active>{destaque.category}</Chip>
               <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
             </div>
             <h2 className="mt-4 font-display font-semibold leading-tight text-[clamp(1.75rem,5vw,2.5rem)]">
-              <Link href={`/radar/${destaque.slug}`} className="transition-colors hover:text-orange">
-                {destaque.title}
+              <Link href={`/radar/${destaque.slug}`}>
+                <span className="link-draw">{destaque.title}</span>
               </Link>
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-ink">
@@ -61,15 +63,16 @@ export default function RadarPage() {
 
       <section className="space-y-10">
         {resto.map((a, i) => (
-          <AnimateOnView key={a.slug} delay={Math.min(i, 4) * 80}>
+          <AnimateOnView key={a.slug} variant="blur-rise" delay={Math.min(i, 4) * 80}>
             <article className="group">
               <Link href={`/radar/${a.slug}`} className="block">
                 <div className="flex items-center gap-3">
                   <Chip>{a.category}</Chip>
                   <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(a.date)}</span>
                 </div>
-                <h2 className="mt-3 font-display text-2xl font-semibold leading-snug transition-colors group-hover:text-orange">
-                  {a.title}
+                <h2 className="mt-3 font-display text-2xl font-semibold leading-snug">
+                  <span className="link-draw">{a.title}</span>
+                  <span className="card-arrow" aria-hidden="true">→</span>
                 </h2>
                 <p className="mt-2 text-muted">{a.summary}</p>
               </Link>
