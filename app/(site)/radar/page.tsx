@@ -51,10 +51,10 @@ export default function RadarPage() {
             </div>
             <h2 className="mt-4 font-display font-semibold leading-tight text-[clamp(1.75rem,5vw,2.5rem)]">
               <Link href={`/radar/${destaque.slug}`}>
-                <span className="link-draw">{destaque.title}</span>
+                <span className="link-gradient">{destaque.title}</span>
               </Link>
             </h2>
-            <p className="mt-4 text-lg leading-relaxed text-ink">
+            <p className="mt-4 text-lg leading-relaxed text-ink text-justify hyphens-auto">
               <span className="font-semibold brand-gradient-text">Por que importa:</span> {destaque.summary}
             </p>
           </article>
@@ -71,10 +71,10 @@ export default function RadarPage() {
                   <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(a.date)}</span>
                 </div>
                 <h2 className="mt-3 font-display text-2xl font-semibold leading-snug">
-                  <span className="link-draw">{a.title}</span>
+                  <span className="link-gradient">{a.title}</span>
                   <span className="card-arrow" aria-hidden="true">→</span>
                 </h2>
-                <p className="mt-2 text-muted">{a.summary}</p>
+                <p className="mt-2 text-muted text-justify hyphens-auto">{a.summary}</p>
               </Link>
             </article>
           </AnimateOnView>
