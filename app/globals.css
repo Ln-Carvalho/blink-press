@@ -45,7 +45,7 @@ body {
 /* ─── Sistema de movimento editorial ─── */
 :root {
   --dur-quick: 200ms;
-  --dur-reveal: 600ms;
+  --dur-reveal: 420ms;
   --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -76,7 +76,7 @@ body {
 
 /* Entrada de página (aplicada pelo template.tsx a cada navegação) */
 .page-enter {
-  animation: pageEnter 350ms var(--ease-out-quart) both;
+  animation: pageEnter 250ms var(--ease-out-quart) both;
 }
 @keyframes pageEnter {
   from { opacity: 0; transform: translateY(12px); }

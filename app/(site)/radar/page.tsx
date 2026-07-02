@@ -35,7 +35,7 @@ export default function RadarPage() {
         <AnimateOnView>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Radar</p>
         </AnimateOnView>
-        <AnimateOnView variant="clip-line" delay={80}>
+        <AnimateOnView variant="clip-line" delay={50}>
           <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">
             Notícias que importam para sua PME
           </h1>
@@ -43,7 +43,7 @@ export default function RadarPage() {
       </header>
 
       {destaque && (
-        <AnimateOnView variant="blur-rise" delay={160}>
+        <AnimateOnView variant="blur-rise" delay={100}>
           <article className="border-b border-line pb-12">
             <div className="flex items-center gap-3">
               <Chip active>{destaque.category}</Chip>
@@ -63,7 +63,7 @@ export default function RadarPage() {
 
       <section className="space-y-10">
         {resto.map((a, i) => (
-          <AnimateOnView key={a.slug} variant="blur-rise" delay={Math.min(i, 4) * 80}>
+          <AnimateOnView key={a.slug} variant="blur-rise" delay={Math.min(i, 4) * 50}>
             <article className="group">
               <Link href={`/radar/${a.slug}`} className="block">
                 <div className="flex items-center gap-3">

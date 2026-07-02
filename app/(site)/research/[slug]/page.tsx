@@ -49,7 +49,7 @@ export default async function PaperPage({ params }: Props) {
         <p className="mt-3 text-muted">{p.authors.join(', ')}</p>
       </AnimateOnView>
 
-      <AnimateOnView delay={80}>
+      <AnimateOnView delay={50}>
         <div className="mt-8 rounded-2xl border border-line bg-white p-6 sm:p-8">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Abstract</p>
           <p className="mt-3 leading-relaxed">{p.abstract}</p>

@@ -19,12 +19,12 @@ export default function ResearchPage() {
         <AnimateOnView>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Research</p>
         </AnimateOnView>
-        <AnimateOnView variant="clip-line" delay={80}>
+        <AnimateOnView variant="clip-line" delay={50}>
           <h1 className="mt-2 font-display font-semibold leading-tight text-[clamp(1.875rem,5vw,2.75rem)]">
             Pesquisa aplicada, <span className="brand-gradient-text">para quem opera</span>
           </h1>
         </AnimateOnView>
-        <AnimateOnView delay={160}>
+        <AnimateOnView delay={100}>
           <div className="mt-6 space-y-4 text-[1.0625rem] leading-relaxed text-justified">
             <p>
               A Blink mantém um programa de pesquisa dedicado aos problemas reais de PMEs
@@ -49,7 +49,7 @@ export default function ResearchPage() {
             </AnimateOnView>
           )}
           {papers.map((p, i) => (
-            <AnimateOnView key={p.slug} variant="blur-rise" delay={Math.min(i, 4) * 80}>
+            <AnimateOnView key={p.slug} variant="blur-rise" delay={Math.min(i, 4) * 50}>
               <article className="rounded-2xl border border-line bg-white p-6 sm:p-8">
                 <p className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(p.date)} · {p.authors.join(', ')}</p>
                 <h3 className="mt-2 font-display text-2xl font-semibold leading-snug">
