@@ -42,16 +42,96 @@ body {
   to   { transform: scaleX(1); transform-origin: left; }
 }
 
-/* Scroll animations */
+/* ─── Sistema de movimento editorial ─── */
+:root {
+  --dur-quick: 200ms;
+  --dur-reveal: 600ms;
+  --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Reveal on-view — o estado oculto só existe com JS ativo;
+   sem JS a página renderiza estática e legível. */
+@media (scripting: enabled) {
+  .animate-on-view { opacity: 0; }
+  .animate-on-view[data-variant='rise'] { transform: translateY(24px); }
+  .animate-on-view[data-variant='blur-rise'] { transform: translateY(24px); filter: blur(6px); }
+  .animate-on-view[data-variant='clip-line'] { clip-path: inset(0 0 100% 0); transform: translateY(12px); }
+  .animate-on-view[data-variant='draw'] { opacity: 1; transform: scaleX(0); transform-origin: left; }
+}
 .animate-on-view {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity var(--dur-reveal) var(--ease-out-quart),
+    transform var(--dur-reveal) var(--ease-out-quart),
+    filter var(--dur-reveal) var(--ease-out-quart),
+    clip-path var(--dur-reveal) var(--ease-out-quart);
 }
 .animate-on-view.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+  filter: none;
 }
+.animate-on-view[data-variant='clip-line'].is-visible {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Entrada de página (aplicada pelo template.tsx a cada navegação) */
+.page-enter {
+  animation: pageEnter 350ms var(--ease-out-quart) both;
+}
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(12px); }
+}
+
+/* Sublinhado gradiente que se desenha no hover (títulos de cards e links) */
+.link-draw {
+  background-image: linear-gradient(90deg, var(--color-gold), var(--color-orange) 55%, var(--color-red));
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding-bottom: 2px;
+  transition: background-size 300ms var(--ease-out-quart);
+}
+a:hover .link-draw,
+.group:hover .link-draw,
+.link-draw:hover {
+  background-size: 100% 2px;
+}
+
+/* Affordance "→" dos cards de listagem */
+.card-arrow {
+  display: inline-block;
+  margin-left: 0.35em;
+  color: var(--color-orange);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity var(--dur-quick) ease, transform var(--dur-quick) var(--ease-out-quart);
+}
+.group:hover .card-arrow {
+  opacity: 1;
+  transform: none;
+}
+
+/* Divisor que se desenha conforme entra na viewport (progressive enhancement) */
+@keyframes dividerDraw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@supports (animation-timeline: view()) {
+  .divider-draw {
+    transform-origin: left;
+    animation: dividerDraw linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+  }
+}
+
+::selection {
+  background: rgba(255, 165, 46, 0.35);
+}
+
+/* Prosa do artigo (revelação por parágrafo — inalterada) */
 .prose-child-hidden {
   opacity: 0;
   transform: translateY(16px);
@@ -61,11 +141,23 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
 @media (prefers-reduced-motion: reduce) {
   .animate-on-view,
+  .animate-on-view[data-variant],
   .prose-child-hidden {
     opacity: 1;
     transform: none;
+    filter: none;
+    clip-path: none;
+    transition: none;
+  }
+  .page-enter,
+  .divider-draw {
+    animation: none;
+  }
+  .link-draw,
+  .card-arrow {
     transition: none;
   }
 }
