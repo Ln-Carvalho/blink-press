@@ -54,7 +54,7 @@ export default function RadarPage() {
                 <span className="link-gradient">{destaque.title}</span>
               </Link>
             </h2>
-            <p className="mt-4 text-lg leading-relaxed text-ink text-justify hyphens-auto">
+            <p className="mt-4 text-lg leading-relaxed text-ink text-justified">
               <span className="font-semibold brand-gradient-text">Por que importa:</span> {destaque.summary}
             </p>
           </article>
@@ -74,7 +74,7 @@ export default function RadarPage() {
                   <span className="link-gradient">{a.title}</span>
                   <span className="card-arrow" aria-hidden="true">→</span>
                 </h2>
-                <p className="mt-2 text-muted text-justify hyphens-auto">{a.summary}</p>
+                <p className="mt-2 text-muted text-justified">{a.summary}</p>
               </Link>
             </article>
           </AnimateOnView>
