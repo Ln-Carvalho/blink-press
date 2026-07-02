@@ -25,7 +25,7 @@ export default function ResearchPage() {
           </h1>
         </AnimateOnView>
         <AnimateOnView delay={160}>
-          <div className="mt-6 space-y-4 text-[1.0625rem] leading-relaxed">
+          <div className="mt-6 space-y-4 text-[1.0625rem] leading-relaxed text-justify hyphens-auto">
             <p>
               A Blink mantém um programa de pesquisa dedicado aos problemas reais de PMEs
               brasileiras: otimização de operações, precificação, logística e acesso a
@@ -54,7 +54,7 @@ export default function ResearchPage() {
                 <p className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(p.date)} · {p.authors.join(', ')}</p>
                 <h3 className="mt-2 font-display text-2xl font-semibold leading-snug">
                   <Link href={`/research/${p.slug}`}>
-                    <span className="link-draw">{p.title}</span>
+                    <span className="link-gradient">{p.title}</span>
                   </Link>
                 </h3>
                 <p className="mt-3 text-muted">{p.abstract}</p>
