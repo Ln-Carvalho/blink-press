@@ -97,12 +97,13 @@ a:hover .link-gradient,
   color: transparent;
 }
 /* Quando o título é quebrado em caracteres pelo SplitText, o gradiente
-   precisa ser reaplicado em cada .split-char — background-image não herda. */
+   precisa ser reaplicado em cada .split-char — background-image não herda
+   através do wrapper intermediário .split-word que o GSAP cria. */
 .link-gradient .split-char {
-  background-image: inherit;
+  background-image: linear-gradient(90deg, var(--color-gold), var(--color-orange) 55%, var(--color-red));
   -webkit-background-clip: text;
   background-clip: text;
-  transition: inherit;
+  transition: color 300ms var(--ease-out-quart);
 }
 a:hover .link-gradient .split-char,
 .group:hover .link-gradient .split-char,
