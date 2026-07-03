@@ -5,6 +5,7 @@ import NewsletterForm from '@/components/NewsletterForm';
 import AnimateOnView from '@/components/AnimateOnView';
 import SplitText from '@/components/SplitText';
 import TextType from '@/components/TextType';
+import RadarCardBody from '@/components/RadarCardBody';
 
 export const metadata: Metadata = {
   title: 'Radar — notícias que importam para sua PME',
@@ -53,15 +54,12 @@ export default function RadarPage() {
               <Chip active>{destaque.category}</Chip>
               <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
             </div>
-            <h2 className="mt-4 font-display font-semibold leading-tight text-[clamp(1.75rem,5vw,2.5rem)]">
-              <Link href={`/radar/${destaque.slug}`}>
-                <SplitText tag="span" text={destaque.title} className="link-gradient" textAlign="left" />
-              </Link>
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-ink text-justified">
-              <span className="font-semibold brand-gradient-text">Por que importa:</span>{' '}
-              <SplitText tag="span" text={destaque.summary} splitType="words" textAlign="justify" />
-            </p>
+            <RadarCardBody
+              title={destaque.title}
+              summary={destaque.summary}
+              titleHref={`/radar/${destaque.slug}`}
+              featured
+            />
           </article>
         </AnimateOnView>
       )}
@@ -75,16 +73,7 @@ export default function RadarPage() {
                   <Chip>{a.category}</Chip>
                   <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(a.date)}</span>
                 </div>
-                <h2 className="mt-3 font-display text-2xl font-semibold leading-snug">
-                  <SplitText tag="span" text={a.title} className="link-gradient" textAlign="left" />
-                </h2>
-                <SplitText
-                  tag="p"
-                  text={a.summary}
-                  className="mt-2 text-muted text-justified"
-                  splitType="words"
-                  textAlign="justify"
-                />
+                <RadarCardBody title={a.title} summary={a.summary} />
               </Link>
             </article>
           </AnimateOnView>

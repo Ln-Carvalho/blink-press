@@ -24,6 +24,7 @@ interface SplitTextProps {
   textAlign?: CSSProperties['textAlign'];
   tag?: HeadingTag;
   onLetterAnimationComplete?: () => void;
+  ready?: boolean;
 }
 
 interface SplitTextTarget extends HTMLElement {
@@ -44,6 +45,7 @@ const SplitText = ({
   textAlign = 'center',
   tag = 'p',
   onLetterAnimationComplete,
+  ready = true,
 }: SplitTextProps) => {
   const ref = useRef<SplitTextTarget>(null);
   const animationCompletedRef = useRef(false);
@@ -86,7 +88,7 @@ const SplitText = ({
 
   useGSAP(
     () => {
-      if (!ref.current || !text || !fontsLoaded || !isNear) return;
+      if (!ref.current || !text || !fontsLoaded || !isNear || !ready) return;
       if (animationCompletedRef.current) return;
       const el = ref.current;
 
@@ -170,7 +172,7 @@ const SplitText = ({
       };
     },
     {
-      dependencies: [text, delay, duration, ease, splitType, JSON.stringify(from), JSON.stringify(to), threshold, rootMargin, fontsLoaded, isNear],
+      dependencies: [text, delay, duration, ease, splitType, JSON.stringify(from), JSON.stringify(to), threshold, rootMargin, fontsLoaded, isNear, ready],
       scope: ref,
     },
   );
@@ -178,7 +180,7 @@ const SplitText = ({
   const style: CSSProperties = {
     textAlign,
     overflow: 'hidden',
-    display: 'inline-block',
+    display: tag === 'span' ? 'inline' : 'inline-block',
     whiteSpace: 'normal',
     wordWrap: 'break-word',
     willChange: 'transform, opacity',
