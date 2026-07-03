@@ -163,10 +163,10 @@ const SplitText = ({
     wordWrap: 'break-word',
     willChange: 'transform, opacity',
   };
-  const Tag = tag;
+  const Tag = tag as 'p';
 
   return (
-    <Tag ref={ref} style={style} className={`split-parent ${className}`}>
+    <Tag ref={ref as React.Ref<HTMLParagraphElement>} style={style} className={`split-parent ${className}`}>
       {text}
     </Tag>
   );
