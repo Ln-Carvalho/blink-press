@@ -52,9 +52,9 @@ export default function RadarHeader({ hero, children, moreId }: RadarHeaderProps
         <button
           type="button"
           onClick={() => document.getElementById(moreId)?.scrollIntoView({ behavior: 'smooth' })}
-          aria-label="Ver mais notícias"
-          className="animate-bounce mx-auto mb-6 mt-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-line text-orange transition-colors hover:border-orange"
+          className="animate-bounce mx-auto mb-6 mt-10 flex shrink-0 flex-col items-center gap-1 rounded-full border border-line px-4 py-2 text-orange transition-colors hover:border-orange"
         >
+          <span className="font-mono text-xs uppercase tracking-wide">Ler mais artigos</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M6 9l6 6 6-6" />
           </svg>
