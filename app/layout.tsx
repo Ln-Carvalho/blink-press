@@ -24,11 +24,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dotRadius={1.5}
           dotSpacing={16}
           bulgeStrength={33}
-          glowRadius={50}
+          glowRadius={0}
           cursorRadius={350}
           gradientFrom="#FFA52E"
           gradientTo="#FF6A00"
-          glowColor="#F21A1A"
           style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: -1, pointerEvents: 'none' }}
         />
         {children}<Analytics /><SpeedInsights /></body>
