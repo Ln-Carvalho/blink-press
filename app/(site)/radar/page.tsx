@@ -47,7 +47,7 @@ export default function RadarPage() {
         hero={
           destaque && (
             <AnimateOnView variant="blur-rise" delay={100}>
-              <article className="glass-card rounded-2xl p-8 sm:p-10">
+              <article className="glass-card rounded-2xl p-5 sm:p-8 lg:p-10">
                 <div className="flex items-center gap-3">
                   <Chip active>{destaque.category}</Chip>
                   <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>

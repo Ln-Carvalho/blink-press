@@ -32,14 +32,14 @@ export default function RadarCardBody({ title, summary, featured = false, titleH
       <h2
         className={
           featured
-            ? 'mt-4 font-display font-semibold leading-tight text-[clamp(2rem,5.5vw,2.75rem)]'
-            : 'mt-3 font-display text-2xl font-semibold leading-snug'
+            ? 'mt-4 font-display font-semibold leading-tight text-[1.75rem] sm:text-[clamp(2rem,5.5vw,2.75rem)]'
+            : 'mt-3 font-display text-xl font-semibold leading-snug sm:text-2xl'
         }
       >
         {titleHref ? <Link href={titleHref}>{titleNode}</Link> : titleNode}
       </h2>
       {featured ? (
-        <p className="mt-4 text-xl leading-relaxed text-ink text-justified">
+        <p className="mt-4 text-base leading-relaxed text-ink text-justified sm:text-xl">
           <span className="font-semibold brand-gradient-text">Por que importa:</span>{' '}
           <SplitText tag="span" text={summary} splitType="words" textAlign="justify" ready={titleDone} />
         </p>

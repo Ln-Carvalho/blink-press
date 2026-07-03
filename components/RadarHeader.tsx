@@ -54,7 +54,7 @@ export default function RadarHeader({ hero, children, moreId }: RadarHeaderProps
               />
             </header>
           </AnimateOnView>
-          <div className="brand-gradient divider-draw mt-3 mb-10 h-[2px] w-full" />
+          <div className="brand-gradient divider-draw mt-3 mb-6 h-[2px] w-full sm:mb-10" />
           {hero}
         </div>
 
