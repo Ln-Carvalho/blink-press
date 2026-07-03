@@ -48,7 +48,7 @@ export default function RadarPage() {
           destaque && (
             <AnimateOnView variant="blur-rise" delay={100}>
               <article>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center gap-3">
                   <Chip active>{destaque.category}</Chip>
                   <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
                 </div>

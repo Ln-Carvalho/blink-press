@@ -31,8 +31,8 @@ export default function RadarHeader({ hero, children, moreId }: RadarHeaderProps
 
   return (
     <HeaderDoneContext.Provider value={headerDone}>
-      <div className="flex min-h-[calc(100svh-10rem)] flex-col justify-between">
-        <div>
+      <div className="flex min-h-[calc(100svh-10rem)] flex-col">
+        <div className="flex flex-1 flex-col justify-center text-center">
           <AnimateOnView>
             <header>
               <TextType
