@@ -39,7 +39,7 @@ body {
 /* Liquid glass — cartão translúcido sem cor própria, só blur + realce de borda,
    pra separar o texto dos pontinhos do fundo sem esconder o padrão atrás. */
 .glass-card {
-  background-color: rgb(255 255 255 / 0.55);
+  background-color: rgb(255 255 255 / 0.3);
   border: 1px solid rgb(255 255 255 / 0.5);
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
