@@ -41,7 +41,7 @@ export default function RadarPage() {
             segmentClassNames={['font-mono text-xs uppercase tracking-[0.2em] text-orange']}
           />
         </AnimateOnView>
-        <AnimateOnView variant="clip-line" delay={50}>
+        <AnimateOnView delay={50}>
           <SplitText
             tag="h1"
             text="Notícias que importam para sua PME"
