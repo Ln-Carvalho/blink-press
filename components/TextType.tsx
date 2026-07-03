@@ -24,7 +24,7 @@ const TextType = ({
   text,
   segmentTags = [],
   segmentClassNames = [],
-  typingSpeed = 30,
+  typingSpeed = 15,
   initialDelay = 0,
   pauseBetweenSegments = 120,
   showCursor = true,
