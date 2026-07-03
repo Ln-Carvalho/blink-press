@@ -55,7 +55,7 @@ export default function RadarPage() {
             </div>
             <h2 className="mt-4 font-display font-semibold leading-tight text-[clamp(1.75rem,5vw,2.5rem)]">
               <Link href={`/radar/${destaque.slug}`}>
-                <span className="link-gradient">{destaque.title}</span>
+                <SplitText tag="span" text={destaque.title} className="link-gradient" textAlign="left" />
               </Link>
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-ink text-justified">
@@ -75,8 +75,7 @@ export default function RadarPage() {
                   <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(a.date)}</span>
                 </div>
                 <h2 className="mt-3 font-display text-2xl font-semibold leading-snug">
-                  <span className="link-gradient">{a.title}</span>
-                  <span className="card-arrow" aria-hidden="true">→</span>
+                  <SplitText tag="span" text={a.title} className="link-gradient" textAlign="left" />
                 </h2>
                 <p className="mt-2 text-muted text-justified">{a.summary}</p>
               </Link>

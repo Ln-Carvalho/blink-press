@@ -96,19 +96,18 @@ a:hover .link-gradient,
 .link-gradient:hover {
   color: transparent;
 }
-
-/* Affordance "→" dos cards de listagem */
-.card-arrow {
-  display: inline-block;
-  margin-left: 0.35em;
-  color: var(--color-orange);
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity var(--dur-quick) ease, transform var(--dur-quick) var(--ease-out-quart);
+/* Quando o título é quebrado em caracteres pelo SplitText, o gradiente
+   precisa ser reaplicado em cada .split-char — background-image não herda. */
+.link-gradient .split-char {
+  background-image: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: inherit;
 }
-.group:hover .card-arrow {
-  opacity: 1;
-  transform: none;
+a:hover .link-gradient .split-char,
+.group:hover .link-gradient .split-char,
+.link-gradient:hover .split-char {
+  color: transparent;
 }
 
 /* Divisor que se desenha conforme entra na viewport (progressive enhancement) */
@@ -177,8 +176,7 @@ p.text-justified,
   .divider-draw {
     animation: none;
   }
-  .link-gradient,
-  .card-arrow {
+  .link-gradient {
     transition: none;
   }
 }
