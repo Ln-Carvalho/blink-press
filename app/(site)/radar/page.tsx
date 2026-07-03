@@ -4,6 +4,7 @@ import { getArticles } from '@/lib/content';
 import NewsletterForm from '@/components/NewsletterForm';
 import AnimateOnView from '@/components/AnimateOnView';
 import SplitText from '@/components/SplitText';
+import TextType from '@/components/TextType';
 
 export const metadata: Metadata = {
   title: 'Radar — notícias que importam para sua PME',
@@ -32,16 +33,18 @@ export default function RadarPage() {
 
   return (
     <div className="space-y-14">
-      <header>
-        <AnimateOnView>
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Group Radar</p>
-        </AnimateOnView>
-        <AnimateOnView variant="clip-line" delay={50}>
-          <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">
-            Notícias que importam para sua PME
-          </h1>
-        </AnimateOnView>
-      </header>
+      <AnimateOnView>
+        <header>
+          <TextType
+            text={['Blink Group Radar', 'Notícias que importam para sua PME']}
+            segmentTags={['p', 'h1']}
+            segmentClassNames={[
+              'font-mono text-xs uppercase tracking-[0.2em] text-orange',
+              'mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl',
+            ]}
+          />
+        </header>
+      </AnimateOnView>
 
       {destaque && (
         <AnimateOnView variant="blur-rise" delay={100}>
@@ -52,7 +55,7 @@ export default function RadarPage() {
             </div>
             <h2 className="mt-4 font-display font-semibold leading-tight text-[clamp(1.75rem,5vw,2.5rem)]">
               <Link href={`/radar/${destaque.slug}`}>
-                <span className="link-gradient">{destaque.title}</span>
+                <SplitText tag="span" text={destaque.title} className="link-gradient" textAlign="left" />
               </Link>
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-ink text-justified">
@@ -72,8 +75,7 @@ export default function RadarPage() {
                   <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(a.date)}</span>
                 </div>
                 <h2 className="mt-3 font-display text-2xl font-semibold leading-snug">
-                  <span className="link-gradient">{a.title}</span>
-                  <span className="card-arrow" aria-hidden="true">→</span>
+                  <SplitText tag="span" text={a.title} className="link-gradient" textAlign="left" />
                 </h2>
                 <p className="mt-2 text-muted text-justified">{a.summary}</p>
               </Link>
