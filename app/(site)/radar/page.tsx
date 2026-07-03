@@ -44,7 +44,7 @@ export default function RadarPage() {
 
       {destaque && (
         <AnimateOnView variant="blur-rise" delay={100}>
-          <article className="border-b border-line pb-12">
+          <article className="rounded-2xl border border-orange/15 bg-[#FDFAF4]/80 p-6 backdrop-blur-md sm:p-8">
             <div className="flex items-center gap-3">
               <Chip active>{destaque.category}</Chip>
               <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
@@ -61,10 +61,10 @@ export default function RadarPage() {
         </AnimateOnView>
       )}
 
-      <section className="space-y-10">
+      <section className="space-y-6">
         {resto.map((a, i) => (
           <AnimateOnView key={a.slug} variant="blur-rise" delay={Math.min(i, 4) * 50}>
-            <article className="group">
+            <article className="group rounded-2xl border border-orange/15 bg-[#FDFAF4]/80 p-6 backdrop-blur-md sm:p-8">
               <Link href={`/radar/${a.slug}`} className="block">
                 <div className="flex items-center gap-3">
                   <Chip>{a.category}</Chip>
