@@ -17,13 +17,14 @@ interface TextTypeProps {
   cursorBlinkDuration?: number;
   className?: string;
   startOnVisible?: boolean;
+  onComplete?: () => void;
 }
 
 const TextType = ({
   text,
   segmentTags = [],
   segmentClassNames = [],
-  typingSpeed = 15,
+  typingSpeed = 40,
   initialDelay = 0,
   pauseBetweenSegments = 120,
   showCursor = true,
@@ -32,6 +33,7 @@ const TextType = ({
   cursorBlinkDuration = 0.5,
   className = '',
   startOnVisible = true,
+  onComplete,
 }: TextTypeProps) => {
   const [completedSegments, setCompletedSegments] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -40,6 +42,9 @@ const TextType = ({
   const [isVisible, setIsVisible] = useState(!startOnVisible);
   const cursorRef = useRef<HTMLSpanElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const onCompleteRef = useRef(onComplete);
+  const completeFiredRef = useRef(false);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     if (!startOnVisible || !containerRef.current) return;
@@ -98,6 +103,13 @@ const TextType = ({
   };
 
   const finishedTyping = currentIndex === text.length - 1 && charIndex >= (text[text.length - 1]?.length ?? 0);
+
+  useEffect(() => {
+    if (finishedTyping && !completeFiredRef.current) {
+      completeFiredRef.current = true;
+      onCompleteRef.current?.();
+    }
+  }, [finishedTyping]);
 
   const cursorEl =
     showCursor && !finishedTyping ? (

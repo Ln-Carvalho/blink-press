@@ -3,9 +3,8 @@ import type { Metadata } from 'next';
 import { getArticles } from '@/lib/content';
 import NewsletterForm from '@/components/NewsletterForm';
 import AnimateOnView from '@/components/AnimateOnView';
-import SplitText from '@/components/SplitText';
-import TextType from '@/components/TextType';
 import RadarCardBody from '@/components/RadarCardBody';
+import RadarHeader, { GatedSplitText } from '@/components/RadarHeader';
 
 export const metadata: Metadata = {
   title: 'Radar — notícias que importam para sua PME',
@@ -34,75 +33,64 @@ export default function RadarPage() {
 
   return (
     <div className="space-y-14">
-      <AnimateOnView>
-        <header>
-          <TextType
-            text={['Blink Group Radar', 'Notícias que importam para sua PME']}
-            segmentTags={['p', 'h1']}
-            segmentClassNames={[
-              'font-mono text-xs uppercase tracking-[0.2em] text-orange',
-              'mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl',
-            ]}
-          />
-        </header>
-      </AnimateOnView>
-
-      {destaque && (
-        <AnimateOnView variant="blur-rise" delay={100}>
-          <article className="border-b border-line pb-12">
-            <div className="flex items-center gap-3">
-              <Chip active>{destaque.category}</Chip>
-              <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
-            </div>
-            <RadarCardBody
-              title={destaque.title}
-              summary={destaque.summary}
-              titleHref={`/radar/${destaque.slug}`}
-              featured
-            />
-          </article>
-        </AnimateOnView>
-      )}
-
-      <section className="space-y-10">
-        {resto.map((a, i) => (
-          <AnimateOnView key={a.slug} variant="blur-rise" delay={Math.min(i, 4) * 50}>
-            <article className="group">
-              <Link href={`/radar/${a.slug}`} className="block">
-                <div className="flex items-center gap-3">
-                  <Chip>{a.category}</Chip>
-                  <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(a.date)}</span>
-                </div>
-                <RadarCardBody title={a.title} summary={a.summary} />
-              </Link>
+      <RadarHeader>
+        {destaque && (
+          <AnimateOnView variant="blur-rise" delay={100}>
+            <article className="border-b border-line pb-12">
+              <div className="flex items-center gap-3">
+                <Chip active>{destaque.category}</Chip>
+                <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
+              </div>
+              <RadarCardBody
+                title={destaque.title}
+                summary={destaque.summary}
+                titleHref={`/radar/${destaque.slug}`}
+                featured
+              />
             </article>
           </AnimateOnView>
-        ))}
-      </section>
+        )}
 
-      <AnimateOnView>
-        <aside className="rounded-2xl border border-line bg-white p-6 sm:p-8">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Programa</p>
-          <SplitText tag="h2" text="Blink Research" className="mt-2 font-display text-xl font-semibold" textAlign="left" />
-          <p className="mt-2 text-sm text-muted">
-            Nosso programa de pesquisa aplicada para PMEs — estudos com rigor acadêmico e aplicação imediata.
-          </p>
-          <Link
-            href="/research"
-            className="mt-4 inline-flex min-h-[44px] items-center font-semibold text-orange transition-colors hover:text-red"
-          >
-            Conhecer o programa →
-          </Link>
-        </aside>
-      </AnimateOnView>
+        <section className="space-y-10">
+          {resto.map((a, i) => (
+            <AnimateOnView key={a.slug} variant="blur-rise" delay={Math.min(i, 4) * 50}>
+              <article className="group">
+                <Link href={`/radar/${a.slug}`} className="block">
+                  <div className="flex items-center gap-3">
+                    <Chip>{a.category}</Chip>
+                    <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(a.date)}</span>
+                  </div>
+                  <RadarCardBody title={a.title} summary={a.summary} />
+                </Link>
+              </article>
+            </AnimateOnView>
+          ))}
+        </section>
 
-      <AnimateOnView>
-        <aside className="border-t border-line pt-10">
-          <SplitText tag="h2" text="Receba o radar da semana" className="font-display text-xl font-semibold" textAlign="left" />
-          <p className="mb-4 mt-1 text-sm text-muted">O essencial para sua PME, por e-mail. Sem spam.</p>
-          <NewsletterForm />
-        </aside>
-      </AnimateOnView>
+        <AnimateOnView>
+          <aside className="rounded-2xl border border-line bg-white p-6 sm:p-8">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Programa</p>
+            <GatedSplitText tag="h2" text="Blink Research" className="mt-2 font-display text-xl font-semibold" textAlign="left" />
+            <p className="mt-2 text-sm text-muted">
+              Nosso programa de pesquisa aplicada para PMEs — estudos com rigor acadêmico e aplicação imediata.
+            </p>
+            <Link
+              href="/research"
+              className="mt-4 inline-flex min-h-[44px] items-center font-semibold text-orange transition-colors hover:text-red"
+            >
+              Conhecer o programa →
+            </Link>
+          </aside>
+        </AnimateOnView>
+
+        <AnimateOnView>
+          <aside className="border-t border-line pt-10">
+            <GatedSplitText tag="h2" text="Receba o radar da semana" className="font-display text-xl font-semibold" textAlign="left" />
+            <p className="mb-4 mt-1 text-sm text-muted">O essencial para sua PME, por e-mail. Sem spam.</p>
+            <NewsletterForm />
+          </aside>
+        </AnimateOnView>
+      </RadarHeader>
     </div>
   );
 }

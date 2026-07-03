@@ -35,7 +35,7 @@ const SplitText = ({
   text,
   className = '',
   delay = 12,
-  duration = 0.015,
+  duration = 0.04,
   ease = 'power2.out',
   splitType = 'chars',
   from = { opacity: 0, y: 10 },

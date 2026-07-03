@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import SplitText from '@/components/SplitText';
+import { useHeaderDone } from '@/components/RadarHeader';
 
 interface RadarCardBodyProps {
   title: string;
@@ -12,6 +13,7 @@ interface RadarCardBodyProps {
 }
 
 export default function RadarCardBody({ title, summary, featured = false, titleHref }: RadarCardBodyProps) {
+  const headerDone = useHeaderDone();
   const [titleDone, setTitleDone] = useState(false);
 
   const titleNode = (
@@ -20,6 +22,7 @@ export default function RadarCardBody({ title, summary, featured = false, titleH
       text={title}
       className="link-gradient"
       textAlign="left"
+      ready={headerDone}
       onLetterAnimationComplete={() => setTitleDone(true)}
     />
   );
