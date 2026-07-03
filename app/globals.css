@@ -57,6 +57,12 @@ body {
   .animate-on-view[data-variant='blur-rise'] { transform: translateY(24px); filter: blur(6px); }
   .animate-on-view[data-variant='clip-line'] { clip-path: inset(0 0 100% 0); transform: translateY(12px); }
   .animate-on-view[data-variant='draw'] { opacity: 1; transform: scaleX(0); transform-origin: left; }
+
+  /* SplitText: o texto puro (SSR) fica escondido até o GSAP dividir
+     e assumir a animação por caractere/palavra — evita o "flash" de
+     texto estático aparecendo antes de sumir para revelar animado. */
+  .split-parent { opacity: 0; }
+  .split-parent.split-ready { opacity: 1; }
 }
 .animate-on-view {
   transition:
@@ -166,7 +172,8 @@ p.text-justified,
 @media (prefers-reduced-motion: reduce) {
   .animate-on-view,
   .animate-on-view[data-variant],
-  .prose-child-hidden {
+  .prose-child-hidden,
+  .split-parent {
     opacity: 1;
     transform: none;
     filter: none;
