@@ -5,6 +5,7 @@ import { getPaper, getPapers } from '@/lib/content';
 import Prose from '@/components/Prose';
 import PdfDownloadButton from '@/components/PdfDownloadButton';
 import AnimateOnView from '@/components/AnimateOnView';
+import SplitText from '@/components/SplitText';
 import ProseAnimated from '@/components/ProseAnimated';
 import ExternalLink from '@/components/ExternalLink';
 
@@ -45,7 +46,12 @@ export default async function PaperPage({ params }: Props) {
 
       <AnimateOnView>
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Research · {fmt(p.date)}</p>
-        <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{p.title}</h1>
+        <SplitText
+          tag="h1"
+          text={p.title}
+          className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]"
+          textAlign="left"
+        />
         <p className="mt-3 text-muted">{p.authors.join(', ')}</p>
       </AnimateOnView>
 

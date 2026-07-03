@@ -4,6 +4,7 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Script from 'next/script';
+import DotField from '@/components/DotField';
 
 const display = MuseoModerno({ subsets: ['latin'], weight: ['500', '600', '700'], variable: '--font-museo' });
 const body = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-jakarta' });
@@ -18,7 +19,18 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${display.variable} ${body.variable} ${mono.variable}`}>
-      <body className="min-h-screen flex flex-col">{children}<Analytics /><SpeedInsights /></body>
+      <body className="min-h-screen flex flex-col">
+        <DotField
+          dotRadius={1.5}
+          dotSpacing={16}
+          bulgeStrength={33}
+          glowRadius={0}
+          cursorRadius={350}
+          gradientFrom="#FFA52E"
+          gradientTo="#FF6A00"
+          style={{ position: 'fixed', inset: 0, width: '100vw', height: '100vh', zIndex: -1, pointerEvents: 'none' }}
+        />
+        {children}<Analytics /><SpeedInsights /></body>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-TMRBQ00WBE"
         strategy="afterInteractive"

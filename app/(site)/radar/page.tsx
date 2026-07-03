@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { getArticles } from '@/lib/content';
 import NewsletterForm from '@/components/NewsletterForm';
 import AnimateOnView from '@/components/AnimateOnView';
+import SplitText from '@/components/SplitText';
 
 export const metadata: Metadata = {
   title: 'Radar — notícias que importam para sua PME',
@@ -84,7 +85,7 @@ export default function RadarPage() {
       <AnimateOnView>
         <aside className="rounded-2xl border border-line bg-white p-6 sm:p-8">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Programa</p>
-          <h2 className="mt-2 font-display text-xl font-semibold">Blink Research</h2>
+          <SplitText tag="h2" text="Blink Research" className="mt-2 font-display text-xl font-semibold" textAlign="left" />
           <p className="mt-2 text-sm text-muted">
             Nosso programa de pesquisa aplicada para PMEs — estudos com rigor acadêmico e aplicação imediata.
           </p>
@@ -99,7 +100,7 @@ export default function RadarPage() {
 
       <AnimateOnView>
         <aside className="border-t border-line pt-10">
-          <h2 className="font-display text-xl font-semibold">Receba o radar da semana</h2>
+          <SplitText tag="h2" text="Receba o radar da semana" className="font-display text-xl font-semibold" textAlign="left" />
           <p className="mb-4 mt-1 text-sm text-muted">O essencial para sua PME, por e-mail. Sem spam.</p>
           <NewsletterForm />
         </aside>
