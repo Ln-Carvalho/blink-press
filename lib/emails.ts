@@ -2,7 +2,7 @@
 // HTML com estilos inline por compatibilidade com clientes de email.
 
 export const NEWSLETTER_FROM =
-  process.env.NEWSLETTER_FROM ?? 'Blink Radar <radar@blinkgroup.com.br>';
+  process.env.NEWSLETTER_FROM ?? 'Blink Group Radar <radar@blinkgroup.com.br>';
 
 // "||" de propósito: env var definida mas vazia (ex.: vars ausente no Actions) cai no fallback
 const SITE_URL = (
@@ -32,7 +32,7 @@ function layout(inner: string, footerExtra = '') {
   <body style="margin: 0; padding: 0; background: #FDFAF4;">
     <div style="max-width: 560px; margin: 0 auto; padding: 40px 24px; font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #212121;">
       <p style="margin: 0 0 32px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #FF6A00; font-weight: 600;">
-        Blink Radar
+        Blink Group Radar
       </p>
       ${inner}
       <hr style="border: none; border-top: 1px solid #e3e3de; margin: 40px 0 16px;" />

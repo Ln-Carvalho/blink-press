@@ -11,7 +11,7 @@ const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variabl
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blinkgroup.com.br'),
-  title: { default: 'Blink Radar', template: '%s — Blink' },
+  title: { default: 'Blink Group Radar', template: '%s — Blink' },
   description: 'O que PMEs brasileiras precisam saber para crescer. Notícias com análise e pesquisa aplicada, pela Blink.',
 };
 

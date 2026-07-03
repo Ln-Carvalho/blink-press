@@ -16,7 +16,7 @@ describe('getLatestRadarPost', () => {
       category: 'Brasil',
       date: '2026-06-01T00:00:00.000Z',
       dateLabel: '01 jun. 2026',
-      source: 'Blink Radar',
+      source: 'Blink Group Radar',
       readTime: '4 min de leitura',
       tags: ['Brasil', 'Último post', 'PMEs'],
     });
