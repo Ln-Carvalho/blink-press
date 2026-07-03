@@ -4,6 +4,7 @@ import { getArticles } from '@/lib/content';
 import NewsletterForm from '@/components/NewsletterForm';
 import AnimateOnView from '@/components/AnimateOnView';
 import SplitText from '@/components/SplitText';
+import TextType from '@/components/TextType';
 
 export const metadata: Metadata = {
   title: 'Radar — notícias que importam para sua PME',
@@ -34,12 +35,13 @@ export default function RadarPage() {
     <div className="space-y-14">
       <AnimateOnView>
         <header>
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Radar</p>
-          <SplitText
-            tag="h1"
-            text="Notícias que importam para sua PME"
-            className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl"
-            textAlign="left"
+          <TextType
+            text={['Blink Radar', 'Notícias que importam para sua PME']}
+            segmentTags={['p', 'h1']}
+            segmentClassNames={[
+              'font-mono text-xs uppercase tracking-[0.2em] text-orange',
+              'mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl',
+            ]}
           />
         </header>
       </AnimateOnView>
