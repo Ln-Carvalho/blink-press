@@ -59,7 +59,8 @@ export default function RadarPage() {
               </Link>
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-ink text-justified">
-              <span className="font-semibold brand-gradient-text">Por que importa:</span> {destaque.summary}
+              <span className="font-semibold brand-gradient-text">Por que importa:</span>{' '}
+              <SplitText tag="span" text={destaque.summary} splitType="words" textAlign="justify" />
             </p>
           </article>
         </AnimateOnView>
@@ -77,7 +78,13 @@ export default function RadarPage() {
                 <h2 className="mt-3 font-display text-2xl font-semibold leading-snug">
                   <SplitText tag="span" text={a.title} className="link-gradient" textAlign="left" />
                 </h2>
-                <p className="mt-2 text-muted text-justified">{a.summary}</p>
+                <SplitText
+                  tag="p"
+                  text={a.summary}
+                  className="mt-2 text-muted text-justified"
+                  splitType="words"
+                  textAlign="justify"
+                />
               </Link>
             </article>
           </AnimateOnView>
