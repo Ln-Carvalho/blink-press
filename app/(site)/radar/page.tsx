@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { getArticles } from '@/lib/content';
 import NewsletterForm from '@/components/NewsletterForm';
 import AnimateOnView from '@/components/AnimateOnView';
+import SplitText from '@/components/SplitText';
 
 export const metadata: Metadata = {
   title: 'Radar — notícias que importam para sua PME',
@@ -34,9 +35,12 @@ export default function RadarPage() {
       <AnimateOnView>
         <header>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Radar</p>
-          <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">
-            Notícias que importam para sua PME
-          </h1>
+          <SplitText
+            tag="h1"
+            text="Notícias que importam para sua PME"
+            className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl"
+            textAlign="left"
+          />
         </header>
       </AnimateOnView>
 
@@ -68,9 +72,12 @@ export default function RadarPage() {
                   <Chip>{a.category}</Chip>
                   <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(a.date)}</span>
                 </div>
-                <h2 className="mt-3 font-display text-2xl font-semibold leading-snug transition-colors group-hover:text-orange">
-                  {a.title}
-                </h2>
+                <SplitText
+                  tag="h2"
+                  text={a.title}
+                  className="mt-3 font-display text-2xl font-semibold leading-snug transition-colors group-hover:text-orange"
+                  textAlign="left"
+                />
                 <p className="mt-2 text-muted">{a.summary}</p>
               </Link>
             </article>
@@ -81,7 +88,7 @@ export default function RadarPage() {
       <AnimateOnView>
         <aside className="rounded-2xl border border-line bg-white p-6 sm:p-8">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Programa</p>
-          <h2 className="mt-2 font-display text-xl font-semibold">Blink Research</h2>
+          <SplitText tag="h2" text="Blink Research" className="mt-2 font-display text-xl font-semibold" textAlign="left" />
           <p className="mt-2 text-sm text-muted">
             Nosso programa de pesquisa aplicada para PMEs — estudos com rigor acadêmico e aplicação imediata.
           </p>
@@ -96,7 +103,7 @@ export default function RadarPage() {
 
       <AnimateOnView>
         <aside className="border-t border-line pt-10">
-          <h2 className="font-display text-xl font-semibold">Receba o radar da semana</h2>
+          <SplitText tag="h2" text="Receba o radar da semana" className="font-display text-xl font-semibold" textAlign="left" />
           <p className="mb-4 mt-1 text-sm text-muted">O essencial para sua PME, por e-mail. Sem spam.</p>
           <NewsletterForm />
         </aside>

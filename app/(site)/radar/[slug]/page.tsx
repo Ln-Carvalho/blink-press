@@ -4,6 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { getArticle, getArticles } from '@/lib/content';
 import Prose from '@/components/Prose';
 import AnimateOnView from '@/components/AnimateOnView';
+import SplitText from '@/components/SplitText';
 import ProseAnimated from '@/components/ProseAnimated';
 import ExternalLink from '@/components/ExternalLink';
 import AuthorCard from '@/components/AuthorCard';
@@ -52,7 +53,12 @@ export default async function ArticlePage({ params }: Props) {
 
       <AnimateOnView>
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">{a.category} · {fmt(a.date)}</p>
-        <h1 className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]">{a.title}</h1>
+        <SplitText
+          tag="h1"
+          text={a.title}
+          className="mt-3 font-display font-semibold leading-tight text-[clamp(2rem,6vw,3rem)]"
+          textAlign="left"
+        />
         {a.author && (
           <AuthorCard
             name={a.author}
