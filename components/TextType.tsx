@@ -23,9 +23,9 @@ const TextType = ({
   text,
   segmentTags = [],
   segmentClassNames = [],
-  typingSpeed = 35,
+  typingSpeed = 12,
   initialDelay = 0,
-  pauseBetweenSegments = 400,
+  pauseBetweenSegments = 120,
   showCursor = true,
   cursorCharacter = '|',
   cursorClassName = '',
@@ -97,11 +97,14 @@ const TextType = ({
     return createElement(Tag, { key: index, className: segmentClassNames[index] ?? '' }, content, cursor);
   };
 
-  const cursorEl = showCursor ? (
-    <span ref={cursorRef} className={`text-type__cursor ${cursorClassName}`}>
-      {cursorCharacter}
-    </span>
-  ) : null;
+  const finishedTyping = currentIndex === text.length - 1 && charIndex >= (text[text.length - 1]?.length ?? 0);
+
+  const cursorEl =
+    showCursor && !finishedTyping ? (
+      <span ref={cursorRef} className={`text-type__cursor ${cursorClassName}`}>
+        {cursorCharacter}
+      </span>
+    ) : null;
 
   return (
     <div ref={containerRef} className={`text-type ${className}`}>
