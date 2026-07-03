@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, type ReactNode, type ComponentProps } from 'react';
+import { createContext, useContext, useEffect, useState, type ReactNode, type ComponentProps } from 'react';
 import AnimateOnView from '@/components/AnimateOnView';
 import TextType from '@/components/TextType';
 import SplitText from '@/components/SplitText';
@@ -28,6 +28,14 @@ interface RadarHeaderProps {
 
 export default function RadarHeader({ hero, children, moreId }: RadarHeaderProps) {
   const [headerDone, setHeaderDone] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <HeaderDoneContext.Provider value={headerDone}>
@@ -53,7 +61,11 @@ export default function RadarHeader({ hero, children, moreId }: RadarHeaderProps
         <button
           type="button"
           onClick={() => document.getElementById(moreId)?.scrollIntoView({ behavior: 'smooth' })}
-          className="animate-bounce mx-auto mb-6 mt-10 flex shrink-0 flex-col items-center gap-1 rounded-full border border-line px-4 py-2 text-orange transition-colors hover:border-orange"
+          aria-hidden={scrolled}
+          tabIndex={scrolled ? -1 : 0}
+          className={`animate-bounce mx-auto mb-3 mt-6 flex shrink-0 flex-col items-center gap-1 rounded-full border border-line px-4 py-2 text-orange transition-all duration-300 hover:border-orange ${
+            scrolled ? 'pointer-events-none opacity-0' : 'opacity-100'
+          }`}
         >
           <span className="font-mono text-xs uppercase tracking-wide">Ler mais artigos</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
