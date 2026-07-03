@@ -32,7 +32,7 @@ export default function RadarCardBody({ title, summary, featured = false, titleH
       <h2
         className={
           featured
-            ? 'mt-4 font-display font-semibold leading-tight text-[clamp(1.75rem,5vw,2.5rem)]'
+            ? 'mt-4 font-display font-semibold leading-tight text-[clamp(2.25rem,6vw,4.25rem)]'
             : 'mt-3 font-display text-2xl font-semibold leading-snug'
         }
       >

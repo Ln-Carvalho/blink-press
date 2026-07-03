@@ -13,6 +13,15 @@ export const metadata: Metadata = {
 
 const fmt = (d: Date) => d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
 
+const MORE_SECTION_ID = 'mais-noticias';
+
+function truncate(text: string, max: number) {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  return `${cut.slice(0, lastSpace > 0 ? lastSpace : max)}…`;
+}
+
 function Chip({ children, active = false }: { children: React.ReactNode; active?: boolean }) {
   return (
     <span
@@ -33,25 +42,28 @@ export default function RadarPage() {
 
   return (
     <div className="space-y-14">
-      <RadarHeader>
-        {destaque && (
-          <AnimateOnView variant="blur-rise" delay={100}>
-            <article className="border-b border-line pb-12">
-              <div className="flex items-center gap-3">
-                <Chip active>{destaque.category}</Chip>
-                <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
-              </div>
-              <RadarCardBody
-                title={destaque.title}
-                summary={destaque.summary}
-                titleHref={`/radar/${destaque.slug}`}
-                featured
-              />
-            </article>
-          </AnimateOnView>
-        )}
-
-        <section className="space-y-10">
+      <RadarHeader
+        moreId={MORE_SECTION_ID}
+        hero={
+          destaque && (
+            <AnimateOnView variant="blur-rise" delay={100}>
+              <article>
+                <div className="flex items-center gap-3">
+                  <Chip active>{destaque.category}</Chip>
+                  <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
+                </div>
+                <RadarCardBody
+                  title={destaque.title}
+                  summary={truncate(destaque.summary, 200)}
+                  titleHref={`/radar/${destaque.slug}`}
+                  featured
+                />
+              </article>
+            </AnimateOnView>
+          )
+        }
+      >
+        <section id={MORE_SECTION_ID} className="space-y-10 scroll-mt-24">
           {resto.map((a, i) => (
             <AnimateOnView key={a.slug} variant="blur-rise" delay={Math.min(i, 4) * 50}>
               <article className="group">

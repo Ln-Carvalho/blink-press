@@ -181,7 +181,8 @@ p.text-justified,
     transition: none;
   }
   .page-enter,
-  .divider-draw {
+  .divider-draw,
+  .animate-bounce {
     animation: none;
   }
   .link-gradient {
