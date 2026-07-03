@@ -49,6 +49,7 @@ const SplitText = ({
   const animationCompletedRef = useRef(false);
   const onCompleteRef = useRef(onLetterAnimationComplete);
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [isNear, setIsNear] = useState(false);
 
   useEffect(() => {
     onCompleteRef.current = onLetterAnimationComplete;
@@ -64,9 +65,28 @@ const SplitText = ({
     }
   }, []);
 
+  // Só divide o texto em caracteres quando o elemento está perto da tela —
+  // evita que dezenas de instâncias façam o split (custoso, força reflow)
+  // simultaneamente no carregamento de páginas com muitos títulos.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsNear(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0, rootMargin: '300px' },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   useGSAP(
     () => {
-      if (!ref.current || !text || !fontsLoaded) return;
+      if (!ref.current || !text || !fontsLoaded || !isNear) return;
       if (animationCompletedRef.current) return;
       const el = ref.current;
 
@@ -150,7 +170,7 @@ const SplitText = ({
       };
     },
     {
-      dependencies: [text, delay, duration, ease, splitType, JSON.stringify(from), JSON.stringify(to), threshold, rootMargin, fontsLoaded],
+      dependencies: [text, delay, duration, ease, splitType, JSON.stringify(from), JSON.stringify(to), threshold, rootMargin, fontsLoaded, isNear],
       scope: ref,
     },
   );
