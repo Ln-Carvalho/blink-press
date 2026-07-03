@@ -12,7 +12,7 @@ export type LatestRadarPost = {
   category: string;
   date: string;
   dateLabel: string;
-  source: 'Blink Radar';
+  source: 'Blink Group Radar';
   readTime: '4 min de leitura';
   tags: string[];
 };
@@ -43,7 +43,7 @@ export function getLatestRadarPost(opts: LatestRadarOptions = {}): LatestRadarPo
     category: latest.category,
     date: latest.date.toISOString(),
     dateLabel: formatDateLabel(latest.date),
-    source: 'Blink Radar',
+    source: 'Blink Group Radar',
     readTime: '4 min de leitura',
     tags: [latest.category, 'Último post', 'PMEs'],
   };

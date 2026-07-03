@@ -7,7 +7,7 @@ const client = new Anthropic(); // ANTHROPIC_API_KEY do ambiente
 
 const hoje = new Date().toISOString().slice(0, 10);
 
-const PROMPT = `Você é o editor do "Blink Radar", publicação da Blink Group para PMEs brasileiras.
+const PROMPT = `Você é o editor do "Blink Group Radar", publicação da Blink Group para PMEs brasileiras.
 
 Tarefa: usando busca na web, encontre A notícia mais relevante das últimas 72 horas para
 pequenas e médias empresas no Brasil (temas: economia, crédito, regulação/tributos,

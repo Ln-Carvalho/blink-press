@@ -9,7 +9,8 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
 
       <main className="flex-1 mx-auto w-full max-w-3xl px-5 pt-40 pb-10 sm:pb-14">{children}</main>
 
-      <footer className="border-t border-line mt-8">
+      <footer className="mt-8">
+        <div className="brand-gradient divider-draw h-[2px] w-full" />
         <div className="mx-auto max-w-3xl px-5 py-10 flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
           <Image src={logo} alt="Blink" className="h-5 w-auto" />
           <p className="text-sm text-muted">

@@ -2,7 +2,7 @@ export default function Prose({ children }: { children: React.ReactNode }) {
   return (
     <div
       className="
-        mt-8 text-[1.0625rem] leading-[1.75] text-ink
+        text-justified mt-8 text-[1.0625rem] leading-[1.75] text-ink
         [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:mt-12 [&_h2]:mb-3 [&_h2]:leading-snug
         [&_h3]:font-display [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:mt-8 [&_h3]:mb-2
         [&_p]:my-5

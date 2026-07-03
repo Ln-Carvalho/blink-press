@@ -15,9 +15,9 @@ export default async function OgImage({ params }: { params: Promise<{ slug: stri
         fontFamily: 'Georgia, serif',
       }}>
         <div style={{ display: 'flex', fontSize: 28, letterSpacing: 4, textTransform: 'uppercase', opacity: 0.7 }}>
-          Blink Radar · {a?.category ?? ''}
+          Blink Group Radar · {a?.category ?? ''}
         </div>
-        <div style={{ display: 'flex', fontSize: 64, lineHeight: 1.15 }}>{a?.title ?? 'Blink Radar'}</div>
+        <div style={{ display: 'flex', fontSize: 64, lineHeight: 1.15 }}>{a?.title ?? 'Blink Group Radar'}</div>
         <div style={{ display: 'flex', fontSize: 24, opacity: 0.7 }}>blinkgroup.com.br/radar</div>
       </div>
     ),

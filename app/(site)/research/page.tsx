@@ -15,13 +15,17 @@ export default function ResearchPage() {
   const papers = getPapers();
   return (
     <div className="space-y-14">
-      <AnimateOnView>
-        <section>
+      <section>
+        <AnimateOnView>
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Research</p>
+        </AnimateOnView>
+        <AnimateOnView variant="clip-line" delay={50}>
           <h1 className="mt-2 font-display font-semibold leading-tight text-[clamp(1.875rem,5vw,2.75rem)]">
             Pesquisa aplicada, <span className="brand-gradient-text">para quem opera</span>
           </h1>
-          <div className="mt-6 space-y-4 text-[1.0625rem] leading-relaxed">
+        </AnimateOnView>
+        <AnimateOnView delay={100}>
+          <div className="mt-6 space-y-4 text-[1.0625rem] leading-relaxed text-justified">
             <p>
               A Blink mantém um programa de pesquisa dedicado aos problemas reais de PMEs
               brasileiras: otimização de operações, precificação, logística e acesso a
@@ -33,8 +37,8 @@ export default function ResearchPage() {
               acompanhado de uma aplicação que qualquer PME pode usar.
             </p>
           </div>
-        </section>
-      </AnimateOnView>
+        </AnimateOnView>
+      </section>
 
       <section>
         <h2 className="font-mono text-xs uppercase tracking-[0.2em] text-muted border-b border-line pb-3">Publicações</h2>
@@ -45,11 +49,13 @@ export default function ResearchPage() {
             </AnimateOnView>
           )}
           {papers.map((p, i) => (
-            <AnimateOnView key={p.slug} delay={Math.min(i, 4) * 80}>
+            <AnimateOnView key={p.slug} variant="blur-rise" delay={Math.min(i, 4) * 50}>
               <article className="rounded-2xl border border-line bg-white p-6 sm:p-8">
                 <p className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(p.date)} · {p.authors.join(', ')}</p>
                 <h3 className="mt-2 font-display text-2xl font-semibold leading-snug">
-                  <Link href={`/research/${p.slug}`} className="transition-colors hover:text-orange">{p.title}</Link>
+                  <Link href={`/research/${p.slug}`}>
+                    <span className="link-gradient">{p.title}</span>
+                  </Link>
                 </h3>
                 <p className="mt-3 text-muted">{p.abstract}</p>
                 {p.pdf && (

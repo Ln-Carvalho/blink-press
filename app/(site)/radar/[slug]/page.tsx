@@ -8,6 +8,7 @@ import SplitText from '@/components/SplitText';
 import ProseAnimated from '@/components/ProseAnimated';
 import ExternalLink from '@/components/ExternalLink';
 import AuthorCard from '@/components/AuthorCard';
+import ReadingProgress from '@/components/ReadingProgress';
 import Link from 'next/link';
 
 type Props = { params: Promise<{ slug: string }> };
@@ -49,6 +50,7 @@ export default async function ArticlePage({ params }: Props) {
 
   return (
     <article>
+      <ReadingProgress />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }} />
 
       <AnimateOnView>
@@ -69,10 +71,10 @@ export default async function ArticlePage({ params }: Props) {
         )}
       </AnimateOnView>
 
-      <AnimateOnView delay={80}>
+      <AnimateOnView delay={50}>
         <div className="mt-8 rounded-r-xl border-l-4 border-orange bg-white py-4 pl-5 pr-4">
           <p className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Por que isso importa para sua PME</p>
-          <p className="mt-2 text-lg leading-relaxed">{a.summary}</p>
+          <p className="mt-2 text-lg leading-relaxed text-justified">{a.summary}</p>
         </div>
       </AnimateOnView>
 

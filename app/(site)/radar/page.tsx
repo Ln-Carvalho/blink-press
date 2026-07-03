@@ -4,7 +4,6 @@ import { getArticles } from '@/lib/content';
 import NewsletterForm from '@/components/NewsletterForm';
 import AnimateOnView from '@/components/AnimateOnView';
 import SplitText from '@/components/SplitText';
-import TextType from '@/components/TextType';
 
 export const metadata: Metadata = {
   title: 'Radar — notícias que importam para sua PME',
@@ -33,32 +32,30 @@ export default function RadarPage() {
 
   return (
     <div className="space-y-14">
-      <AnimateOnView>
-        <header>
-          <TextType
-            text={['Blink Radar', 'Notícias que importam para sua PME']}
-            segmentTags={['p', 'h1']}
-            segmentClassNames={[
-              'font-mono text-xs uppercase tracking-[0.2em] text-orange',
-              'mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl',
-            ]}
-          />
-        </header>
-      </AnimateOnView>
+      <header>
+        <AnimateOnView>
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Group Radar</p>
+        </AnimateOnView>
+        <AnimateOnView variant="clip-line" delay={50}>
+          <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">
+            Notícias que importam para sua PME
+          </h1>
+        </AnimateOnView>
+      </header>
 
       {destaque && (
-        <AnimateOnView delay={80}>
+        <AnimateOnView variant="blur-rise" delay={100}>
           <article className="border-b border-line pb-12">
             <div className="flex items-center gap-3">
               <Chip active>{destaque.category}</Chip>
               <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(destaque.date)}</span>
             </div>
             <h2 className="mt-4 font-display font-semibold leading-tight text-[clamp(1.75rem,5vw,2.5rem)]">
-              <Link href={`/radar/${destaque.slug}`} className="transition-colors hover:text-orange">
-                {destaque.title}
+              <Link href={`/radar/${destaque.slug}`}>
+                <span className="link-gradient">{destaque.title}</span>
               </Link>
             </h2>
-            <p className="mt-4 text-lg leading-relaxed text-ink">
+            <p className="mt-4 text-lg leading-relaxed text-ink text-justified">
               <span className="font-semibold brand-gradient-text">Por que importa:</span> {destaque.summary}
             </p>
           </article>
@@ -67,20 +64,18 @@ export default function RadarPage() {
 
       <section className="space-y-10">
         {resto.map((a, i) => (
-          <AnimateOnView key={a.slug} delay={Math.min(i, 4) * 80}>
+          <AnimateOnView key={a.slug} variant="blur-rise" delay={Math.min(i, 4) * 50}>
             <article className="group">
               <Link href={`/radar/${a.slug}`} className="block">
                 <div className="flex items-center gap-3">
                   <Chip>{a.category}</Chip>
                   <span className="font-mono text-xs uppercase tracking-wide text-muted">{fmt(a.date)}</span>
                 </div>
-                <SplitText
-                  tag="h2"
-                  text={a.title}
-                  className="mt-3 font-display text-2xl font-semibold leading-snug transition-colors group-hover:text-orange"
-                  textAlign="left"
-                />
-                <p className="mt-2 text-muted">{a.summary}</p>
+                <h2 className="mt-3 font-display text-2xl font-semibold leading-snug">
+                  <span className="link-gradient">{a.title}</span>
+                  <span className="card-arrow" aria-hidden="true">→</span>
+                </h2>
+                <p className="mt-2 text-muted text-justified">{a.summary}</p>
               </Link>
             </article>
           </AnimateOnView>

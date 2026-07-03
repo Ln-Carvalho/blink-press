@@ -1,13 +1,16 @@
 'use client';
 import { useEffect, useRef } from 'react';
 
+export type RevealVariant = 'rise' | 'blur-rise' | 'clip-line' | 'draw' | 'fade';
+
 interface Props {
   children: React.ReactNode;
+  variant?: RevealVariant;
   delay?: number;
   className?: string;
 }
 
-export default function AnimateOnView({ children, delay = 0, className = '' }: Props) {
+export default function AnimateOnView({ children, variant = 'rise', delay = 0, className = '' }: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -29,6 +32,7 @@ export default function AnimateOnView({ children, delay = 0, className = '' }: P
   return (
     <div
       ref={ref}
+      data-variant={variant}
       className={`animate-on-view${className ? ` ${className}` : ''}`}
       style={delay > 0 ? { transitionDelay: `${delay}ms` } : undefined}
     >

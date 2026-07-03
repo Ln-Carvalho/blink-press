@@ -1,0 +1,30 @@
+name: newsletter
+# Roda quando o deploy de produção do Vercel conclui com sucesso —
+# assim o link do post já está no ar quando o email chega.
+# O script é idempotente (dedupe por slug no Resend), então rodar
+# em todo deploy é seguro. workflow_dispatch serve de gatilho manual.
+on:
+  deployment_status:
+  workflow_dispatch:
+
+jobs:
+  notificar:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       startsWith(github.event.deployment_status.environment, 'Production'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx tsx scripts/notify-new-posts.mts
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
+          NEWSLETTER_SITE_URL: ${{ vars.NEWSLETTER_SITE_URL }}

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { Resend } from 'resend';
+import { welcomeEmail, NEWSLETTER_FROM } from '@/lib/emails';
 
 const bodySchema = z.object({ email: z.string().email() });
 
@@ -24,6 +25,19 @@ export async function POST(req: Request) {
     if (error) {
       console.error('resend error', error);
       return NextResponse.json({ error: 'Falha ao cadastrar' }, { status: 502 });
+    }
+    // Boas-vindas: falha aqui não deve derrubar a assinatura já efetivada
+    try {
+      const { subject, html } = welcomeEmail();
+      const { error: sendError } = await resend.emails.send({
+        from: NEWSLETTER_FROM,
+        to: parsed.data.email,
+        subject,
+        html,
+      });
+      if (sendError) console.error('welcome email error', sendError);
+    } catch (err) {
+      console.error('welcome email error', err);
     }
   } catch (err) {
     console.error('resend error', err);
