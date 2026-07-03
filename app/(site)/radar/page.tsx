@@ -33,23 +33,18 @@ export default function RadarPage() {
 
   return (
     <div className="space-y-14">
-      <header>
-        <AnimateOnView>
+      <AnimateOnView>
+        <header>
           <TextType
-            text={['Blink Group Radar']}
-            segmentTags={['p']}
-            segmentClassNames={['font-mono text-xs uppercase tracking-[0.2em] text-orange']}
+            text={['Blink Group Radar', 'Notícias que importam para sua PME']}
+            segmentTags={['p', 'h1']}
+            segmentClassNames={[
+              'font-mono text-xs uppercase tracking-[0.2em] text-orange',
+              'mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl',
+            ]}
           />
-        </AnimateOnView>
-        <AnimateOnView delay={50}>
-          <SplitText
-            tag="h1"
-            text="Notícias que importam para sua PME"
-            className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl"
-            textAlign="left"
-          />
-        </AnimateOnView>
-      </header>
+        </header>
+      </AnimateOnView>
 
       {destaque && (
         <AnimateOnView variant="blur-rise" delay={100}>
