@@ -35,7 +35,7 @@ const SplitText = ({
   text,
   className = '',
   delay = 12,
-  duration = 0.015,
+  duration = 0.03,
   ease = 'power2.out',
   splitType = 'chars',
   from = { opacity: 0, y: 10 },
@@ -121,6 +121,8 @@ const SplitText = ({
         if (!targets) targets = self.chars || self.words || self.lines;
       };
 
+      el.classList.add('split-ready');
+
       const splitInstance = new GSAPSplitText(el, {
         type: splitType,
         smartWrap: true,
@@ -169,6 +171,7 @@ const SplitText = ({
           /* noop */
         }
         el._rbsplitInstance = null;
+        el.classList.remove('split-ready');
       };
     },
     {

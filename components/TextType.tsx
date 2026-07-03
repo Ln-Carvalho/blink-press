@@ -23,7 +23,7 @@ const TextType = ({
   text,
   segmentTags = [],
   segmentClassNames = [],
-  typingSpeed = 15,
+  typingSpeed = 30,
   initialDelay = 0,
   pauseBetweenSegments = 120,
   showCursor = true,
