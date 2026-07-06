@@ -7,6 +7,7 @@ import AnimateOnView from '@/components/AnimateOnView';
 export const metadata: Metadata = {
   title: 'Research — pesquisa aplicada para PMEs',
   description: 'O programa de pesquisa da Blink: ciência aplicada aos problemas reais de pequenas e médias empresas brasileiras.',
+  alternates: { canonical: '/research' },
 };
 
 const fmt = (d: Date) => d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });

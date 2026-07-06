@@ -16,11 +16,18 @@ export function generateStaticParams() {
 }
 export const dynamicParams = false;
 
+const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blinkgroup.com.br';
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const p = getPaper(slug);
   if (!p) return {};
-  return { title: p.title, description: p.abstract, openGraph: { title: p.title, description: p.abstract, type: 'article' } };
+  return {
+    title: p.title,
+    description: p.abstract,
+    alternates: { canonical: `/research/${slug}` },
+    openGraph: { title: p.title, description: p.abstract, type: 'article' },
+  };
 }
 
 const fmt = (d: Date) => d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric', timeZone: 'UTC' });
@@ -34,10 +41,17 @@ export default async function PaperPage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'ScholarlyArticle',
     headline: p.title,
+    image: [`${BASE}/brand/LogoBlink_Preta.png`],
     abstract: p.abstract,
     datePublished: p.date.toISOString(),
+    dateModified: p.date.toISOString(),
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/research/${p.slug}` },
     author: p.authors.map((a) => ({ '@type': 'Person', name: a })),
-    publisher: { '@type': 'Organization', name: 'Blink Group' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Blink Group',
+      logo: { '@type': 'ImageObject', url: `${BASE}/brand/LogoBlink_Preta.png` },
+    },
   };
 
   return (
