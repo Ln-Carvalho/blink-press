@@ -18,6 +18,8 @@ export function generateStaticParams() {
 }
 export const dynamicParams = false;
 
+const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://blinkgroup.com.br';
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const a = getArticle(slug);
@@ -25,6 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: a.title,
     description: a.summary,
+    alternates: { canonical: `/radar/${slug}` },
     openGraph: { title: a.title, description: a.summary, type: 'article', publishedTime: a.date.toISOString() },
   };
 }
@@ -40,12 +43,19 @@ export default async function ArticlePage({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: a.title,
+    image: [`${BASE}/brand/LogoBlink_Preta.png`],
     datePublished: a.date.toISOString(),
+    dateModified: a.date.toISOString(),
     description: a.summary,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE}/radar/${a.slug}` },
     author: a.author
       ? { '@type': 'Person', name: a.author }
       : { '@type': 'Organization', name: 'Blink Group', url: 'https://blinkgroup.com.br' },
-    publisher: { '@type': 'Organization', name: 'Blink Group' },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Blink Group',
+      logo: { '@type': 'ImageObject', url: `${BASE}/brand/LogoBlink_Preta.png` },
+    },
   };
 
   return (

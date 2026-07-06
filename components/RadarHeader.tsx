@@ -43,15 +43,24 @@ export default function RadarHeader({ hero, children, moreId }: RadarHeaderProps
         <div className="flex flex-1 flex-col justify-center">
           <AnimateOnView>
             <header>
-              <TextType
-                text={['Blink Group Radar', 'Notícias que importam para sua PME']}
-                segmentTags={['p', 'h1']}
-                segmentClassNames={[
-                  'font-mono text-xs uppercase tracking-[0.2em] text-orange',
-                  'mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl',
-                ]}
-                onComplete={() => setHeaderDone(true)}
-              />
+              {/* Texto real sempre no DOM para SEO/crawlers — a animação abaixo é só decorativa (aria-hidden). */}
+              <div className="sr-only">
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-orange">Blink Group Radar</p>
+                <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl">
+                  Notícias que importam para sua PME
+                </h1>
+              </div>
+              <div aria-hidden="true">
+                <TextType
+                  text={['Blink Group Radar', 'Notícias que importam para sua PME']}
+                  segmentTags={['p', 'p']}
+                  segmentClassNames={[
+                    'font-mono text-xs uppercase tracking-[0.2em] text-orange',
+                    'mt-2 font-display text-3xl font-semibold leading-tight sm:text-4xl',
+                  ]}
+                  onComplete={() => setHeaderDone(true)}
+                />
+              </div>
             </header>
           </AnimateOnView>
           <div className="brand-gradient divider-draw mt-3 mb-6 h-[2px] w-full sm:mb-10" />

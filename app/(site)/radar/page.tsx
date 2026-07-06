@@ -9,6 +9,7 @@ import RadarHeader, { GatedSplitText } from '@/components/RadarHeader';
 export const metadata: Metadata = {
   title: 'Radar — notícias que importam para sua PME',
   description: 'Seleção e análise de notícias para PMEs brasileiras: Brasil, Mundo, Regulação, Tecnologia e Capital.',
+  alternates: { canonical: '/radar' },
 };
 
 const fmt = (d: Date) => d.toLocaleDateString('pt-BR', { day: '2-digit', month: 'short', year: 'numeric', timeZone: 'UTC' });
