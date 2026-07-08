@@ -149,6 +149,7 @@ const SplitText = ({
                 anticipatePin: 0.4,
               },
               onComplete: () => {
+                gsap.set(targets!, { willChange: 'auto' });
                 animationCompletedRef.current = true;
                 onCompleteRef.current?.();
               },
