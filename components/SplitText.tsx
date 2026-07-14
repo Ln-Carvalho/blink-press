@@ -149,7 +149,12 @@ const SplitText = ({
                 anticipatePin: 0.4,
               },
               onComplete: () => {
-                gsap.set(targets!, { willChange: 'auto' });
+                // Sem isso, o transform/will-change residual do GSAP mantém o char
+                // na própria camada composta; em elementos com background-clip:text
+                // (título com .link-gradient) o Chrome às vezes trava um raster
+                // desatualizado nessa camada e o primeiro caractere fica "fantasma"
+                // com o gradiente por cima do texto final.
+                gsap.set(targets!, { clearProps: 'transform,willChange' });
                 animationCompletedRef.current = true;
                 onCompleteRef.current?.();
               },
