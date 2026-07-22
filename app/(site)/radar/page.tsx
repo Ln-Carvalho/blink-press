@@ -5,6 +5,7 @@ import NewsletterForm from '@/components/NewsletterForm';
 import AnimateOnView from '@/components/AnimateOnView';
 import RadarCardBody from '@/components/RadarCardBody';
 import RadarHeader, { GatedSplitText } from '@/components/RadarHeader';
+import Chip from '@/components/Chip';
 
 export const metadata: Metadata = {
   title: 'Radar — notícias que importam para sua PME',
@@ -21,20 +22,6 @@ function truncate(text: string, max: number) {
   const cut = text.slice(0, max);
   const lastSpace = cut.lastIndexOf(' ');
   return `${cut.slice(0, lastSpace > 0 ? lastSpace : max)}…`;
-}
-
-function Chip({ children, active = false }: { children: React.ReactNode; active?: boolean }) {
-  return (
-    <span
-      className={
-        active
-          ? 'brand-gradient text-white inline-block rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide'
-          : 'inline-block rounded-full border border-line px-3 py-1 text-xs font-semibold uppercase tracking-wide text-muted'
-      }
-    >
-      {children}
-    </span>
-  );
 }
 
 export default function RadarPage() {

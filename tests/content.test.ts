@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import path from 'node:path';
-import { loadCollection, getArticles, getArticle, getPapers, getPaper } from '../lib/content';
+import { loadCollection, getArticles, getArticle, getRelatedArticles, getPapers, getPaper } from '../lib/content';
 import { articleSchema } from '../lib/schemas';
 
 const FIXTURES = path.join(import.meta.dirname, 'fixtures');
@@ -57,5 +57,43 @@ describe('getPapers (contra fixtures via baseDir)', () => {
   it('getPaper respeita includeDrafts', () => {
     expect(getPaper('paper-draft', { baseDir: FIXTURES })).toBeUndefined();
     expect(getPaper('paper-draft', { baseDir: FIXTURES, includeDrafts: true })?.title).toBe('Paper rascunho');
+  });
+});
+
+describe('getRelatedArticles (contra fixtures-related via baseDir)', () => {
+  const RELATED_FIXTURES = path.join(import.meta.dirname, 'fixtures-related');
+  const SPARSE_FIXTURES = path.join(import.meta.dirname, 'fixtures-related-sparse');
+
+  it('escolhe os 2 mais recentes da mesma categoria e completa com o mais recente geral', () => {
+    const current = getArticle('current-post-a', { baseDir: RELATED_FIXTURES })!;
+    const related = getRelatedArticles(current, { baseDir: RELATED_FIXTURES });
+    expect(related.map((r) => r.slug)).toEqual([
+      'brasil-mais-recente',
+      'brasil-segunda',
+      'tech-mais-recente-geral',
+    ]);
+  });
+
+  it('nunca inclui o próprio post nem drafts', () => {
+    const current = getArticle('current-post-a', { baseDir: RELATED_FIXTURES })!;
+    const related = getRelatedArticles(current, { baseDir: RELATED_FIXTURES });
+    expect(related.some((r) => r.slug === 'current-post-a')).toBe(false);
+    expect(related.some((r) => r.slug === 'capital-rascunho')).toBe(false);
+  });
+
+  it('faz fallback para os mais recentes gerais quando a categoria não tem 2 outros posts', () => {
+    const current = getArticle('current-post-b', { baseDir: RELATED_FIXTURES })!;
+    const related = getRelatedArticles(current, { baseDir: RELATED_FIXTURES });
+    expect(related.map((r) => r.slug)).toEqual([
+      'current-post-a',
+      'tech-mais-recente-geral',
+      'brasil-mais-recente',
+    ]);
+  });
+
+  it('retorna menos de 3 itens sem quebrar quando não há posts suficientes', () => {
+    const current = getArticle('current', { baseDir: SPARSE_FIXTURES })!;
+    const related = getRelatedArticles(current, { baseDir: SPARSE_FIXTURES });
+    expect(related.map((r) => r.slug)).toEqual(['other']);
   });
 });
