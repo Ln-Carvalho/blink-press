@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { getArticle, getArticles } from '@/lib/content';
+import { getArticle, getArticles, getRelatedArticles } from '@/lib/content';
 import Prose from '@/components/Prose';
 import AnimateOnView from '@/components/AnimateOnView';
 import SplitText from '@/components/SplitText';
@@ -9,7 +9,7 @@ import ProseAnimated from '@/components/ProseAnimated';
 import ExternalLink from '@/components/ExternalLink';
 import AuthorCard from '@/components/AuthorCard';
 import ReadingProgress from '@/components/ReadingProgress';
-import Link from 'next/link';
+import RelatedPosts from '@/components/RelatedPosts';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -38,6 +38,8 @@ export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
   const a = getArticle(slug);
   if (!a) notFound();
+
+  const related = getRelatedArticles(a);
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -118,9 +120,7 @@ export default async function ArticlePage({ params }: Props) {
 
       <AnimateOnView>
         <div className="mt-10 border-t border-line pt-6">
-          <Link href="/radar" className="font-mono text-xs uppercase tracking-[0.2em] text-orange hover:text-red transition-colors">
-            ← Radar
-          </Link>
+          <RelatedPosts posts={related} />
         </div>
       </AnimateOnView>
     </article>

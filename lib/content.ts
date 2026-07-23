@@ -45,6 +45,14 @@ export function getArticle(slug: string, opts: Opts = {}): Entry<Article> | unde
   return getArticles({ ...opts }).find((a) => a.slug === slug);
 }
 
+export function getRelatedArticles(current: Entry<Article>, opts: Opts = {}): Entry<Article>[] {
+  const others = getArticles(opts).filter((article) => article.slug !== current.slug);
+  const sameCategory = others.filter((article) => article.category === current.category).slice(0, 2);
+  const sameCategorySlugs = new Set(sameCategory.map((article) => article.slug));
+  const rest = others.filter((article) => !sameCategorySlugs.has(article.slug));
+  return [...sameCategory, ...rest.slice(0, 3 - sameCategory.length)];
+}
+
 export function getPapers(opts: Opts = {}): Entry<Paper>[] {
   return visible(
     loadCollection(path.join(opts.baseDir ?? defaultBase(), 'research'), paperSchema),
