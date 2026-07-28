@@ -9,6 +9,7 @@ export const statusSchema = z.enum(['draft', 'published']);
 
 export const articleSchema = z.object({
   title: z.string().min(1),
+  seoTitle: z.string().min(1).max(60).optional(),
   date: z.coerce.date(),
   category: z.enum(ARTICLE_CATEGORIES),
   summary: z.string().min(1),

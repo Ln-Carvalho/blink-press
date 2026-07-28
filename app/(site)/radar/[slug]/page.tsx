@@ -24,11 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const a = getArticle(slug);
   if (!a) return {};
+  const title = a.seoTitle ?? a.title;
   return {
-    title: a.title,
+    title,
     description: a.summary,
     alternates: { canonical: `/radar/${slug}` },
-    openGraph: { title: a.title, description: a.summary, type: 'article', publishedTime: a.date.toISOString() },
+    openGraph: { title, description: a.summary, type: 'article', publishedTime: a.date.toISOString() },
   };
 }
 

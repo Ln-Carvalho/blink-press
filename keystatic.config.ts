@@ -18,6 +18,12 @@ export default config({
       columns: ['status', 'date', 'category'],
       schema: {
         title: fields.slug({ name: { label: 'Título' } }),
+        seoTitle: fields.text({
+          label: 'Título SEO (opcional, até 60 caracteres)',
+          description:
+            'Usado na aba do navegador e no Google. Se vazio, usa o Título de cima (pode ficar longo demais para o Google).',
+          validation: { length: { max: 60 } },
+        }),
         status: fields.select({
           label: 'Status',
           options: [
